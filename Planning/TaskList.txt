@@ -1,0 +1,29 @@
+22-12-2015:
+	- Create a preliminary plan
+	  COMPLETE
+	- Create a task list
+	  COMPLETE
+	- Set up git and github repository for work
+	  COMPLETE
+
+22-12-2015:
+	- Research and determine the best way to use FreeCAD in this project
+	  COMPLETE
+	+ Export Drawings from FreeCAD as mesh type with .obj extension. This creates a very simple surface mesh format.
+
+22-12-2015:
+	- Design a robot for testing purposes
+	  COMPLETE
+	+ Created a very simple 3 DOF arm.
+	- Model testing robot in FreeCAD
+	  COMPLETE
+
+?:
+	- Design and implement bare-bones versions of the SerialLink and Environment classes.
+	  INCOMPLETE
+
+?:
+	- Investigate using PyOpenGL to create a graphical simulation of the robot
+	INCOMPLETE
+	- Design a system for viewing the robot.
+	INCOMPLETE
