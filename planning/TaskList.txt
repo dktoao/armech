@@ -1,0 +1,17 @@
+22-12-2015:
+	- Create a preliminary plan
+	  COMPLETE
+	- Create a task list
+	  COMPLETE
+	- Set up git and github repository for work
+	  INCOMPLETE
+?:
+	- Research and determine the best way to use FreeCAD in this project
+	  INCOMPLETE
+?:
+	- Design a robot for testing purposes
+	  INCOMPLETE
+	- Model testing robot in FreeCAD
+	  INCOMPLETE
+?:
+	- Design and implement bare-bones versions of the SerialLink and Environment classes

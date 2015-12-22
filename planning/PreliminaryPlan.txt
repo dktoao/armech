@@ -1,0 +1,74 @@
+PRELIMINARY PLAN FOR ARMECH - SERIAL LINK ROBOTICS LIBRARY FOR PYTHON
+
+INCLUDED FUNCTIONALITY:
+	1. Classes representing:
+		Serial Link Robot
+		Working Environment of the robot
+	2. Forward Kinematics:
+		DH Parameter System
+	3. Inverse Kinematics:
+		Numerical Solution
+	4. Path Planning:
+		Joint Space
+		Cartesian Space
+	5. Dynamics:
+		torques = f(positions, velocities, accelerations)
+		[positions, velocities, accelerations] = f(torques)
+	6. Control:
+		Model based feed-forward export
+		PID tuning (feed-forward on/off)
+	7. Simulation:
+		Graphical Simulation with environment
+	8. Modeling Tools:
+		Add-in for FreeCAD
+
+CLASS MAKEUP:
+	Serial Link Robot Class:
+		Each link has parameters:
+			alpha
+			theta
+			a
+			d
+			mass
+			center of mass
+			inertia matrix
+			solid model file
+		Joint limits
+		Joint friction functions
+		Implementation of functionalities 2-6
+	Working Environment Class:
+		Bounding box for graphical display
+		Gravity function / constant
+		Obstacles with different shapes
+		Manipulatable objects, with mass, inertia properties:
+			functions for determining graspability
+		
+THINGS THAT WILL NEED TO BE DONE:
+	1: See 2-6
+	2: Very basic implementation of transform algorithms and link parameters (easy)
+	3: Study best way to provide numerical solution, implement one or two (hard)
+	4: Create various path planning algorithms for the robot (medium)
+	5: Implement Newton-Euler algorithm and numerical simulation methods (Runge-Kutta? Fixed/Dynamic Step) (medium/hard)
+	6: Use 5 to export feed-forward torques. Research and implement a PID tuning method based on... path? average configuration? Required speed? (hard)
+	7: Learn how to use PyOpenGL and create a working display GUI with view controls. (hard)
+	8: This I don't have the foggiest. Needs to work within FreeCAD to export mass properties and geometries so complex links can be modeled. (hard)
+
+REQUIRED WORKFLOW:
+	Classes from 1. will be expanded as the following are accomplished
+	First Phase:
+		2. Forward Kinematics
+		4. Path Planning
+		8. Modeling Tools
+	Second Phase:
+		7. Simulation (for path planning only) (requires modeling tools, forward kinematics and path planning)
+	Third Phase:
+		3. Inverse Kinematics (requires path planning simulation)
+		5. Dynamics (requires path planning)
+	Fourth Phase:
+		6. Control (requires dynamics)
+		7. Simulation (for dynamics) (requires dynamics)
+
+TASK PLANNING TOOL:
+	Specific steps in the process shall be divided up into 4 hour (max) blocks of work. These work blocks will be described in a task planning text file.
+	This file is to be filled out after the work on one task ends and is marked as done and committed to repository.
+		
