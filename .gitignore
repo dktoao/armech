@@ -63,3 +63,8 @@ target/
 start_env.sh
 venv/
 
+# Pycharm IDE
+.idea/
+
+# Sphinx Output
+doc/_build/
