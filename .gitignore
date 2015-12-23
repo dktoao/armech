@@ -58,3 +58,8 @@ target/
 
 # Gedit tilde files
 *.txt~
+
+# Virtual Environment
+start_env.sh
+venv/
+
