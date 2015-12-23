@@ -27,3 +27,7 @@
 	INCOMPLETE
 	- Design a system for viewing the robot.
 	INCOMPLETE
+
+?:
+	- Create a logo for the project
+	INCOMPLETE
