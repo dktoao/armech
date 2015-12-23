@@ -20,7 +20,7 @@
 
 ?:
 	- Design and implement bare-bones versions of the SerialLink and Environment classes.
-	  INCOMPLETE
+	  INCOMPLETE(50%)
 
 ?:
 	- Investigate using PyOpenGL to create a graphical simulation of the robot
