@@ -68,3 +68,6 @@ venv/
 
 # Sphinx Output
 doc/_build/
+
+# FreeCAD archives
+*.fcstd1
