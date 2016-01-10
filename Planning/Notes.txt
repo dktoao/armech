@@ -1,0 +1,2 @@
+Installing pygame (as of 1.9.1), should be able to install normally at some point:
+  - pip install http://www.pygame.org/ftp/pygame-1.9.1release.tar.gz
