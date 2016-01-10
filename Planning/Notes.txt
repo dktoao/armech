@@ -1,2 +1,33 @@
 Installing pygame (as of 1.9.1), should be able to install normally at some point:
   - pip install http://www.pygame.org/ftp/pygame-1.9.1release.tar.gz
+
+Pygame + OpenGL Basics (from the tutorial by sentdex on youtube).
+
+ - use function "glBegin" to start drawing things in OpenGL
+  - use glBegin(GL_LINES) to draw lines
+  - use glEnd() to end the drawing
+ - use function "glVertex3fv" to connect verticies while drawing.
+ - always call pygame.init() at the begining of any pygame call
+ - pygame.display.set_mode((800,600), DOUBLEBUF|OPENGL) will set the resolution of view and enable OpenGL viewing.
+ - Setting view parameters
+  - gluPerspective(field_of_view, aspect_ratio, clipping_plane)
+  - glTranslatef(x, y, z) moving the perspective to a different place
+  - glRotatef(deg, x, y, z)
+ - Basic pygame loop::
+  - while True:
+   - for event in pygame.event.get():
+    - if event.type == pygame.QUIT;
+     - pygame.quit()
+     - quit()
+   - glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+   - run glVertex3fv to draw an object
+   - pygame.display.flip()
+   - pygame.time.wait(msec_to_wait)
+
+Plan for the WorkspaceViewer object:
+ - Set all pygame and OpenGL parameters
+ - Set up a gridded floor 3d object
+ - contain a set of GraphicalObjects
+ - calls glBegin -> calls graphical object display functions -> calls glEnd
+ - takes input commands to rotate and move the view
+

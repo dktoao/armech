@@ -3,6 +3,8 @@
 # Contains the GraphicalBody class that allows rendering via PyOpenGL and
 # various functions along with a way to update the transformation matrix
 
+# TODO: load_body needs to be an inheritable member function
+
 from numpy import dot, identity, float_, int_, zeros, min, max
 
 

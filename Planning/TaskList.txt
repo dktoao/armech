@@ -24,10 +24,25 @@
 
 ?:
 	- Investigate using PyOpenGL to create a graphical simulation of the robot
-	INCOMPLETE
+	COMPLETE
 	- Design a system for viewing the robot.
 	INCOMPLETE
 
 ?:
 	- Create a logo for the project
+	INCOMPLETE(50%)
+
+?:
+	- Implement the Workspace / WorkspaceViewer class and get them to display the floor
 	INCOMPLETE
+
+?:
+	- Finish implementation of a graphical body class that the link class will inherit from.
+	INCOMPLETE
+
+?:
+	- Write some test to test the graphical capabilities of the program
+	INCOMPLETE
+	- Create the robot and objects from the logo and take a snapshot
+	INCOMPLETE
+
