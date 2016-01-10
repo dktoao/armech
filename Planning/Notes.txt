@@ -6,14 +6,14 @@ Pygame + OpenGL Basics (from the tutorial by sentdex on youtube).
  - use function "glBegin" to start drawing things in OpenGL
   - use glBegin(GL_LINES) to draw lines
   - use glEnd() to end the drawing
- - use function "glVertex3fv" to connect verticies while drawing.
- - always call pygame.init() at the begining of any pygame call
+ - use function "glVertex3fv" to connect vertices while drawing.
+ - always call pygame.init() at the beginning of any pygame call
  - pygame.display.set_mode((800,600), DOUBLEBUF|OPENGL) will set the resolution of view and enable OpenGL viewing.
  - Setting view parameters
   - gluPerspective(field_of_view, aspect_ratio, clipping_plane)
   - glTranslatef(x, y, z) moving the perspective to a different place
   - glRotatef(deg, x, y, z)
- - Basic pygame loop::
+ - Basic pygame loop:
   - while True:
    - for event in pygame.event.get():
     - if event.type == pygame.QUIT;
@@ -30,4 +30,19 @@ Plan for the WorkspaceViewer object:
  - contain a set of GraphicalObjects
  - calls glBegin -> calls graphical object display functions -> calls glEnd
  - takes input commands to rotate and move the view
+
+Pygame install dependencies:
+ - mercurial
+ - python3-dev
+ - python3-numpy
+ - libav-tools
+ - libsdl-image1.2-dev
+ - libsdl-mixer1.2-dev
+ - libsdl-ttf2.0-dev
+ - libsmpeg-dev
+ - libsdl1.2-dev
+ - libportmidi-dev
+ - libswscale-dev
+ - libavformat-dev
+ - libavcodec-dev
 

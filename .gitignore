@@ -71,3 +71,6 @@ doc/_build/
 
 # FreeCAD archives
 *.fcstd1
+
+# My sandbox for trial and error learning
+sandbox/

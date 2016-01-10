@@ -8,8 +8,8 @@
 
 22-12-2015:
 	- Research and determine the best way to use FreeCAD in this project
-	  COMPLETE
 	+ Export Drawings from FreeCAD as mesh type with .obj extension. This creates a very simple surface mesh format.
+	  COMPLETE
 
 22-12-2015:
 	- Design a robot for testing purposes
@@ -22,26 +22,31 @@
 	- Design and implement bare-bones versions of the SerialLink and Environment classes.
 	  INCOMPLETE(50%)
 
-?:
+10-1-2016:
 	- Investigate using PyOpenGL to create a graphical simulation of the robot
 	COMPLETE
 	- Design a system for viewing the robot.
-	INCOMPLETE
+	+ See Notes.txt
+	COMPLETE
 
 ?:
 	- Create a logo for the project
 	INCOMPLETE(50%)
 
-?:
-	- Implement the Workspace / WorkspaceViewer class and get them to display the floor
-	INCOMPLETE
+10-1-2016:
+	- Implement the Workspace class and get it to display the floor
+	+ Implemented the Workspace class, need a function to view it now.
+	COMPLETE
 
-?:
+10-1-2016:
 	- Finish implementation of a graphical body class that the link class will inherit from.
-	INCOMPLETE
+	COMPLETE
 
 ?:
-	- Write some test to test the graphical capabilities of the program
+    - Figure out the best format for running tests on the package
+
+?:
+	- Write some tests to test the graphical capabilities of the program
 	INCOMPLETE
 	- Create the robot and objects from the logo and take a snapshot
 	INCOMPLETE
