@@ -1,3 +1,4 @@
 PyOpenGL==3.1.0
+PyOpenGL-accelerate==3.1.0
 numpy==1.10.2
 hg+http://bitbucket.org/pygame/pygame
