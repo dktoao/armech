@@ -4,9 +4,10 @@
 # robots, graspable objects and obstacles.
 
 from armech.graphics.graphicalbody import GraphicalBody
+from armech.graphics.shapes import Box
 
 
-class Workspace(GraphicalBody):
+class Workspace(Box):
 
     def __init__(self, bounds_x, bounds_y, bounds_z,
                  face_color=(0.0, 1.0, 0.0),
@@ -24,47 +25,24 @@ class Workspace(GraphicalBody):
         :return: A Workspace object
         """
 
-        # Initialize GraphicalBody
-        super(Workspace, self).__init__()
+        # Initialize Box
+        super(Workspace, self).__init__(bounds_x, bounds_y, bounds_z, face_color, edge_color, False)
 
-        # Establish room geometry
-        vertices = (
-            (bounds_x[0], bounds_y[0], bounds_z[0]),
-            (bounds_x[1], bounds_y[0], bounds_z[0]),
-            (bounds_x[1], bounds_y[1], bounds_z[0]),
-            (bounds_x[0], bounds_y[1], bounds_z[0]),
-            (bounds_x[0], bounds_y[0], bounds_z[1]),
-            (bounds_x[1], bounds_y[0], bounds_z[1]),
-            (bounds_x[1], bounds_y[1], bounds_z[1]),
-            (bounds_x[0], bounds_y[1], bounds_z[1]),
-        )
-        edges = (
-            (0, 1),
-            (1, 2),
-            (2, 3),
-            (3, 0),
-            (4, 5),
-            (5, 6),
-            (6, 7),
-            (7, 4),
-            (0, 4),
-            (1, 5),
-            (2, 6),
-            (3, 7),
-        )
-        faces = (
-            (0, 1, 3),
-            (1, 2, 3),
-            (0, 4, 5),
-            (1, 0, 5),
-            (1, 5, 2),
-            (2, 1, 6),
-            (2, 6, 3),
-            (3, 6, 7),
-            (3, 7, 4),
-            (0, 3, 4),
-            (4, 7, 5),
-            (5, 7, 6),
-        )
+        # Create a list of obstacles
+        self.obstacles = {}
 
-        self.set_geometry(vertices, edges, faces, face_color, edge_color)
+    def add_obstacle(self, name, obstacle):
+        """
+        Adds an obstacle to the scene, can be accessed by name
+        :param name: string; name given to the object
+        :param obstacle: GraphicalBody object to add to the scene
+        """
+
+        # Check that the obstacle is a GraphicalBody
+        if not isinstance(obstacle, GraphicalBody):
+            raise ValueError(
+                'The obstacle must be an instance of GraphicalBody'
+            )
+
+        # Add the obstacle to the obstacles dictionary
+        self.obstacles[name] = obstacle

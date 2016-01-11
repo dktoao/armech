@@ -33,18 +33,22 @@ class GraphicalBody:
         self.bounds_z = float_((0, 0))
         self.rotation = identity(3)
         self.translation = zeros((3, 1))
-        self.world_vertices = None
+        self.world_vertices = float_([])
 
-    def set_transform(self, rotation, translation):
+    def set_transform(self, **kwargs):
         """
         Set the transform from the object to the world coordinate system
         :param rotation: 3x3 rotation matrix from the body to world
         :param translation: 3x1 vector to the body coordinate system
         """
+        rotation = kwargs.get('rotation')
+        translation = kwargs.get('translation')
 
         # Set values
-        self.rotation = float_(rotation)
-        self.translation = float_(translation)
+        if rotation:
+            self.rotation = float_(rotation)
+        if translation:
+            self.translation = float_(translation)
 
         # Apply the transform
         self.world_vertices = dot(self.rotation, self.vertices) + \
@@ -125,7 +129,7 @@ class GraphicalBody:
             glColor3fv(self.face_color)
             for face in self.faces:
                 for idx_vertex in face:
-                    glVertex3fv(self.vertices[:, idx_vertex])
+                    glVertex3fv(self.world_vertices[:, idx_vertex])
         else:
             pass
 
@@ -137,6 +141,6 @@ class GraphicalBody:
             glColor3fv(self.edge_color)
             for edge in self.edges:
                 for idx_vertex in edge:
-                    glVertex3fv(self.vertices[:, idx_vertex])
+                    glVertex3fv(self.world_vertices[:, idx_vertex])
         else:
             pass
