@@ -2,6 +2,9 @@
 #
 # Implementation of the Link class that represents a link in a chain of
 # serial links.
+#
+# MAJOR TODO: rewrite this whole class using the GraphicalBody or PhysicalBody class
+#
 
 from numpy import array, float
 

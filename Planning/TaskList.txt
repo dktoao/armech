@@ -46,8 +46,17 @@
     - Figure out the best format for running tests on the package
 
 ?:
-	- Write some tests to test the graphical capabilities of the program
-	INCOMPLETE
-	- Create the robot and objects from the logo and take a snapshot
-	INCOMPLETE
+    - Write some tests to test the graphical capabilities of the program
+    INCOMPLETE
+    - Create the robot and objects from the logo and take a snapshot
+    INCOMPLETE
 
+?:
+    - Write more shape classes in armech/graphics/shapes.py and test them
+    INCOMPLETE
+
+?:
+    - Implement a PhysicalBody / DynamicBody class that has mass an intertia properties.
+    INCOMPLETE
+
+?:  
