@@ -80,7 +80,7 @@ class Box(GraphicalBody):
                 (5, 7, 6),
             )
 
-        self.set_geometry(vertices, edges, faces, face_color, edge_color)
+        self.set_graphics(vertices, edges, faces, face_color, edge_color)
 
 
 class Cylinder(GraphicalBody):
@@ -140,7 +140,8 @@ class Cylinder(GraphicalBody):
             faces.append((idx_next, idx_next+n_circ_pnts, idx_cur+n_circ_pnts))
 
         # Initialize geometry
-        self.set_geometry(vertices, edges, faces, face_color, edge_color)
+        self.set_graphics(vertices, edges, faces, face_color, edge_color)
 
 
 # TODO: class Sphere(GraphicalBody):
+# TODO: class Cone(GraphicalBody):

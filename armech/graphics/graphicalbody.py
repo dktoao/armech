@@ -19,7 +19,7 @@ class GraphicalBody:
         """
 
         # initialize values
-        self.has_obj = False
+        self.has_graphics = False
         self.vertices = float_([])
         self.edges = float_([])
         self.faces = float_([])
@@ -51,10 +51,11 @@ class GraphicalBody:
             self.translation = float_(translation)
 
         # Apply the transform
-        self.world_vertices = dot(self.rotation, self.vertices) + \
-            self.translation
+        if self.has_graphics:
+            self.world_vertices = dot(self.rotation, self.vertices) + \
+                self.translation
 
-    def set_geometry(self, vertices, edges, faces,
+    def set_graphics(self, vertices, edges, faces,
                      face_color=DEFAULT_FACE_COLOR,
                      edge_color=DEFAULT_EDGE_COLOR):
         """
@@ -90,7 +91,7 @@ class GraphicalBody:
             self.translation
 
         # set the has_obj flag
-        self.has_obj = True
+        self.has_graphics = True
 
     def load_obj(self, obj_file_name, face_color=DEFAULT_FACE_COLOR,
                  edge_color=DEFAULT_EDGE_COLOR):

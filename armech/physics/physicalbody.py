@@ -21,7 +21,7 @@ class PhysicalBody(GraphicalBody):
 	super(PhysicalBody, self).__init__()
         
         # Initialize values
-        self.is_physical = False
+        self.has_physics = False
         self.mass = float_(None)
         self.center_of_mass = zeros(3, 1)
         self.inertia_matrix = zeros(3, 3)
@@ -49,7 +49,7 @@ class PhysicalBody(GraphicalBody):
        ])
 
       # Enable dynamics
-      self.is_physical = True
+      self.has_physics = True
 
 
 
