@@ -108,7 +108,7 @@ class Workspace(Box):
         """
         self._robots.pop(name)
 
-    def update_view(self):
+    def render_all(self):
         """
         Renders all the objects in the workspace to an OpenGL canvas
         """
