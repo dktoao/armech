@@ -5,10 +5,11 @@
 import pygame
 from pygame.locals import DOUBLEBUF, OPENGL, QUIT
 from pygame import display
-from OpenGL.GL import glTranslatef, glRotate, glClear, glBegin, glEnd, GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LINES, GL_TRIANGLES
+from OpenGL.GL import glTranslatef, glRotate, glClear, glBegin, glEnd, \
+    GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LINES, GL_TRIANGLES
 from OpenGL.GLU import gluPerspective
 
-from armech.workspace import Workspace
+from armech.graphics.workspace import Workspace
 
 
 # Get the workspace object

@@ -9,7 +9,7 @@ from numpy import float_, zeros, array
 from armech.graphics.graphicalbody import GraphicalBody
 
 
-class PhysicalBody(GraphicalBody):
+class RigidBody(GraphicalBody):
 
     def __init__(self):
         """
