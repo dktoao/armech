@@ -16,10 +16,14 @@ def test_workspace_and_other_objects_display_correctly():
     cube_obstacle.set_transform(translation=(1.0, 1.0, 9.0))
     ws.add_obstacle('cube_obstacle', cube_obstacle)
     # Cylinder Obstacle
-    cylinder_obstacle = Cylinder(4, 0.5)
-    cylinder_obstacle.set_transform(translation=(2.0, 2.0, 2.0))
-    ws.add_obstacle('cylinder_obstacle', cylinder_obstacle)
+    #cylinder_obstacle = Cylinder(4, 0.5)
+    #cylinder_obstacle.set_transform(translation=(2.0, 2.0, 2.0))
+    #ws.add_obstacle('cylinder_obstacle', cylinder_obstacle)
 
     # Create a viewer and display the scene
     view = BaseViewer(ws)
     view.show()
+
+    ans = input("Did you see the workspace? [y/n]")
+    if ans != 'y':
+        raise Exception('User could not see the workspace')

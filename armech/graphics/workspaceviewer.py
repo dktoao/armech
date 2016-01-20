@@ -2,7 +2,7 @@
 #
 # Classes for viewing the workspace
 
-from numpy import max, concatenate, absolute
+from numpy import max, concatenate, absolute, int_
 from OpenGL.GL import glTranslatef, glRotatef
 from OpenGL.GLU import gluPerspective
 import pygame
@@ -18,7 +18,7 @@ class BaseViewer:
     that can be overwritten by subclasses to get more advanced functionality
     """
     # Update at 30 frames per second
-    UPDATE_PERIOD = 1/30
+    UPDATE_PERIOD = 1000//30
 
     def __init__(self, workspace):
         """
@@ -44,11 +44,13 @@ class BaseViewer:
 
         # Set the the view distance based on the workspace size
         ws_max_dimension = max(absolute(concatenate(
+            (
                 self._workspace.bounds_x,
                 self._workspace.bounds_y,
-                self._workspace.bounds_z
+                self._workspace.bounds_z,
+             )
         )))
-        glTranslatef(0.0, 0.0, -ws_max_dimension)
+        glTranslatef(0.0, 0.0, -5*ws_max_dimension)
 
         # Rotate to a view at 45 deg angle horizon of X
         glRotatef(-135, 1, 0, 0)
@@ -84,15 +86,18 @@ class BaseViewer:
         self.initial_view()
 
         # Start event loop
-        while True:
+        exit = False
+        while not(exit):
             events = pygame.event.get()
             for event in events:
                 if event.type == QUIT:
-                    pygame.quit()
-                    quit()
+                    exit = True
 
-            self.update_view(events, kwargs)
-            display.flip()
-            time.wait(self.UPDATE_PERIOD * 1000)
+            if not(exit):
+                self.update_view(events, **kwargs)
+                display.flip()
+                time.wait(self.UPDATE_PERIOD)
+            else:
+                pygame.quit()
 
 # TODO: add a WorkspaceViewer class that accepts user input to rotate view

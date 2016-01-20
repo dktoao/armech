@@ -48,7 +48,7 @@ class GraphicalBody:
         if rotation:
             self.rotation = float_(rotation)
         if translation:
-            self.translation = float_(translation)
+            self.translation = float_(translation).reshape((3,1))
 
         # Apply the transform
         if self.has_graphics:
@@ -126,7 +126,7 @@ class GraphicalBody:
         """
         Draws the object faces on the OpenGL canvas.
         """
-        if self.has_obj:
+        if self.has_graphics:
             glColor3fv(self.face_color)
             for face in self.faces:
                 for idx_vertex in face:
@@ -138,7 +138,7 @@ class GraphicalBody:
         """
         Draws the object edges on the OpenGL canvas.
         """
-        if self.has_obj:
+        if self.has_graphics:
             glColor3fv(self.edge_color)
             for edge in self.edges:
                 for idx_vertex in edge:
