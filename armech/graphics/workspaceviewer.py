@@ -50,10 +50,11 @@ class BaseViewer:
                 self._workspace.bounds_z,
              )
         )))
-        glTranslatef(0.0, 0.0, -5*ws_max_dimension)
+        #glTranslatef(0.0, 0.0, -5*ws_max_dimension)
+        glTranslatef(0.0, 0.0, -20.0)
 
         # Rotate to a view at 45 deg angle horizon of X
-        glRotatef(-135, 1, 0, 0)
+        #glRotatef(-135, 1, 0, 0)
 
     @staticmethod
     def update_view(events, **kwargs):
@@ -76,24 +77,24 @@ class BaseViewer:
         :param kwargs: kwargs to pass to the update function
         """
 
-        # Display the workspace
-        self._workspace.render_all()
-
         # Initialize the graphics window
         pygame.init()
         display.set_mode(window_size, DOUBLEBUF | OPENGL)
-        gluPerspective(45, (window_size[0]/window_size[1]), 0.1, 50.0)
+        gluPerspective(45, (window_size[0]/window_size[1]), 0.1, 100.0)
         self.initial_view()
 
+        # Display the workspace
+        self._workspace.render_all()
+
         # Start event loop
-        exit = False
-        while not(exit):
+        pygame_exit = False
+        while not pygame_exit:
             events = pygame.event.get()
             for event in events:
                 if event.type == QUIT:
-                    exit = True
+                    pygame_exit = True
 
-            if not(exit):
+            if not pygame_exit:
                 self.update_view(events, **kwargs)
                 display.flip()
                 time.wait(self.UPDATE_PERIOD)

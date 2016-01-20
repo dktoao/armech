@@ -23,7 +23,3 @@ def test_workspace_and_other_objects_display_correctly():
     # Create a viewer and display the scene
     view = BaseViewer(ws)
     view.show()
-
-    ans = input("Did you see the workspace? [y/n]")
-    if ans != 'y':
-        raise Exception('User could not see the workspace')
