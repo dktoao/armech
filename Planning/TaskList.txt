@@ -48,7 +48,7 @@
     COMPLETE
 ?:
     - Write some tests to test the graphical capabilities of the program
-    INCOMPLETE(50%)
+    COMPLETE
     - Create the robot and objects from the logo and take a snapshot
     INCOMPLETE
 
@@ -60,3 +60,6 @@
     - Implement a PhysicalBody / DynamicBody class that has mass an intertia properties.
     INCOMPLETE
 
+?:
+    - Remove all edges from shape and use lighting instead.
+    INCOMPLETE

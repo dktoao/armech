@@ -116,7 +116,7 @@ class Cylinder(GraphicalBody):
         # top and bottom edges
         for shift in [0, n_circ_pnts]:
             for n in range(n_circ_pnts):
-                if n+1 > n_circ_pnts:
+                if n+2 > n_circ_pnts:
                     idx_next = shift+2
                 else:
                     idx_next = n+3
@@ -130,13 +130,13 @@ class Cylinder(GraphicalBody):
         faces = []
         for n in range(n_circ_pnts):
             idx_cur = n+2
-            if n+1 > n_circ_pnts:
+            if n+2 > n_circ_pnts:
                 idx_next = 2
             else:
                 idx_next = n+3
             faces.append((0, idx_next, idx_cur))  # bottom face
             faces.append((1, idx_cur+n_circ_pnts, idx_next+n_circ_pnts))  # top face
-            faces.append((idx_cur, idx_next, idx_next+n_circ_pnts))  # side face 1
+            faces.append((idx_cur, idx_next, idx_cur+n_circ_pnts))  # side face 1
             faces.append((idx_next, idx_next+n_circ_pnts, idx_cur+n_circ_pnts))
 
         # Initialize geometry

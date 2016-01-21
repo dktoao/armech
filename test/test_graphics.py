@@ -24,9 +24,9 @@ def test_workspace_and_other_objects_display_correctly():
     cube_obstacle_z.set_transform(translation=(0.0, 0.0, 2.0))
     ws.add_obstacle('cube_obstacle_z', cube_obstacle_z)
     # Cylinder Obstacle
-    #cylinder_obstacle = Cylinder(4, 0.5)
-    #cylinder_obstacle.set_transform(translation=(2.0, 2.0, 2.0))
-    #ws.add_obstacle('cylinder_obstacle', cylinder_obstacle)
+    cylinder_obstacle = Cylinder(2, 0.5)
+    cylinder_obstacle.set_transform(translation=(3.0, 3.0, 0.0))
+    ws.add_obstacle('cylinder_obstacle', cylinder_obstacle)
 
     # Create a viewer and display the scene
     view = BaseViewer(ws)
