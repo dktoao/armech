@@ -57,7 +57,9 @@ class BaseViewer:
         glRotatef(90.0, 1.0, 0.0, 0.0)
         glRotatef(180.0, 0.0, 1.0, 0.0)
         glRotatef(30.0, 0.0, 0.0, 1.0)
-        glRotatef(-30.0, 1.0, 0.0, 0.0)
+
+        # Move up to see thte room
+        glTranslatef(0.0, 0.0, -self._workspace.bounds_z[1]/2.0)
 
     @staticmethod
     def update_view(events, **kwargs):
@@ -71,7 +73,7 @@ class BaseViewer:
         rate = kwargs.get('rate', 0.4)
 
         # Rotate view
-        #glRotatef(rate, 0.0, 0.0, 1.0)
+        glRotatef(rate, 0.0, 0.0, 1.0)
 
     def show(self, window_size=(800, 600), **kwargs):
         """
