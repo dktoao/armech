@@ -3,7 +3,8 @@
 # Contains the GraphicalBody class that allows rendering via PyOpenGL and
 # various functions along with a way to update the transformation matrix
 
-from numpy import dot, identity, float_, int_, zeros, min, max
+from numpy import dot, identity, float_, int_, zeros, min, max, cross
+from numpy.linalg import norm
 from OpenGL.GL import glVertex3fv, glColor3fv
 
 DEFAULT_FACE_COLOR = float_((0.0, 1.0, 1.0))
@@ -23,6 +24,7 @@ class GraphicalBody:
         self.vertices = float_([])
         self.edges = float_([])
         self.faces = float_([])
+        self.face_normals = float_([])
         self.face_color = float_(DEFAULT_FACE_COLOR)
         self.edge_color = float_(DEFAULT_EDGE_COLOR)
         self.n_vertices = float_(0)
@@ -34,6 +36,7 @@ class GraphicalBody:
         self.rotation = identity(3)
         self.translation = zeros((3, 1))
         self.world_vertices = float_([])
+        self.world_face_normals = float_([])
 
     def set_transform(self, **kwargs):
         """
@@ -74,9 +77,17 @@ class GraphicalBody:
         self.faces = int_(faces)
         self.face_color = float_(face_color)
         self.edge_color = float_(edge_color)
-        self.n_vertices = self.vertices.shape[0]
+        self.n_vertices = self.vertices.shape[1]
         self.n_edges = self.edges.shape[0]
         self.n_faces = self.faces.shape[0]
+
+        # find the face normals
+        self.face_normals = zeros((3, self.n_faces))
+        for k, idx_vertices in enumerate(faces):
+            vec1 = self.vertices[:, idx_vertices[1]] - self.vertices[:, idx_vertices[0]]
+            vec2 = self.vertices[:, idx_vertices[2]] - self.vertices[:, idx_vertices[0]]
+            normal = cross(vec1, vec2)
+            self.face_normals[:, k] = normal/norm(normal)
 
         # find the bounding box
         self.bounds_x = float_((min(self.vertices[0, :]),
