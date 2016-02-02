@@ -2,9 +2,27 @@
 #
 # tests to show that the graphics are working properly
 
+from numpy import float_
+from numpy.testing import assert_array_almost_equal
+
 from armech.graphics.workspace import Workspace
 from armech.graphics.shapes import Box, Cylinder
 from armech.graphics.workspaceviewer import BaseViewer
+
+
+def test_box_normals_calculated_correctly():
+
+    # Create a box object
+    box = Box((-1.0, 1.0), (-1.0, 1.0), (-1.0, 1.0))
+    # assert normals on each face are correct
+    assert_array_almost_equal(
+        box.face_normals,
+        float_((
+            (0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, -1.0, -1.0, 0.0, 0.0),
+            (0.0, 0.0, -1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0),
+            (-1.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0),
+        ))
+    )
 
 
 def test_workspace_and_other_objects_display_correctly():
