@@ -2,9 +2,9 @@
 #
 # Classes for viewing the workspace
 
-from numpy import max, concatenate, absolute, int_
-from OpenGL.GL import glTranslatef, glRotatef, glClear, \
-        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT
+from numpy import max, concatenate, absolute
+from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, \
+        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LIGHTING, GL_LIGHT0
 from OpenGL.GLU import gluPerspective
 import pygame
 from pygame import display, time
@@ -87,6 +87,10 @@ class BaseViewer:
         display.set_mode(window_size, DOUBLEBUF | OPENGL)
         gluPerspective(45, (window_size[0]/window_size[1]), 0.1, 100.0)
         self.initial_view()
+
+        # Initialize lighting
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
 
         # Display the workspace
         self._workspace.render_all()

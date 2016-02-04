@@ -5,7 +5,8 @@
 
 from numpy import dot, identity, float_, int_, zeros, min, max, cross
 from numpy.linalg import norm
-from OpenGL.GL import glVertex3fv, glColor3fv
+from OpenGL.GL import glVertex3fv, glColor3fv, glNormal3fv, glMaterialfv, \
+    GL_DIFFUSE, GL_FRONT
 
 DEFAULT_FACE_COLOR = float_((0.0, 1.0, 1.0))
 DEFAULT_EDGE_COLOR = float_((0.2, 0.2, 0.2))
@@ -51,12 +52,13 @@ class GraphicalBody:
         if rotation:
             self.rotation = float_(rotation)
         if translation:
-            self.translation = float_(translation).reshape((3,1))
+            self.translation = float_(translation).reshape((3, 1))
 
         # Apply the transform
         if self.has_graphics:
             self.world_vertices = dot(self.rotation, self.vertices) + \
                 self.translation
+            self.world_face_normals = dot(self.rotation, self.face_normals)
 
     def set_graphics(self, vertices, edges, faces,
                      face_color=DEFAULT_FACE_COLOR,
@@ -97,12 +99,11 @@ class GraphicalBody:
         self.bounds_z = float_((min(self.vertices[2, :]),
                                 max(self.vertices[2, :])))
 
-        # find the word vertices
-        self.world_vertices = dot(self.rotation, self.vertices) + \
-            self.translation
-
         # set the has_obj flag
         self.has_graphics = True
+
+        # Update world vertices and normals
+        self.set_transform()
 
     def load_obj(self, obj_file_name, face_color=DEFAULT_FACE_COLOR,
                  edge_color=DEFAULT_EDGE_COLOR):
@@ -131,19 +132,19 @@ class GraphicalBody:
                 faces.append(tuple(data[1:]))
 
         # Set the values
-        self.set_geometry(vertices, [], faces, face_color, edge_color)
+        self.set_graphics(vertices, [], faces, face_color, edge_color)
 
     def render_faces(self):
         """
         Draws the object faces on the OpenGL canvas.
         """
         if self.has_graphics:
-            glColor3fv(self.face_color)
-            for face in self.faces:
+            #glColor3fv(self.face_color)
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, self.face_color)
+            for k, face in enumerate(self.faces):
+                glNormal3fv(self.world_face_normals[:, k])
                 for idx_vertex in face:
                     glVertex3fv(self.world_vertices[:, idx_vertex])
-        else:
-            pass
 
     def render_edges(self):
         """
@@ -154,5 +155,3 @@ class GraphicalBody:
             for edge in self.edges:
                 for idx_vertex in edge:
                     glVertex3fv(self.world_vertices[:, idx_vertex])
-        else:
-            pass

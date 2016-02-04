@@ -3,7 +3,7 @@
 # Functions for getting vertexes, edges and faces for simple shapes such as
 # rectangular boxes, cylinders and spheres.
 
-from numpy import int_, float_, pi, sin, cos
+from numpy import pi, sin, cos
 from .graphicalbody import GraphicalBody
 
 
@@ -35,6 +35,8 @@ class Box(GraphicalBody):
             (bounds_x[1], bounds_y[1], bounds_z[1]),
             (bounds_x[0], bounds_y[1], bounds_z[1]),
         )
+        edges = tuple()
+        """
         edges = (
             (0, 1),
             (1, 2),
@@ -49,6 +51,7 @@ class Box(GraphicalBody):
             (2, 6),
             (3, 7),
         )
+        """
         if outward_normals:
             faces = (
                 (0, 3, 1),
@@ -112,6 +115,8 @@ class Cylinder(GraphicalBody):
                 vertices.append((x, y, z))
 
         # Generate edges
+        edges = tuple()
+        """
         edges = []
         # top and bottom edges
         for shift in [0, n_circ_pnts]:
@@ -125,6 +130,7 @@ class Cylinder(GraphicalBody):
         for n in range(4):
             idx_base = 2 + n_points*n
             edges.append((idx_base, idx_base+n_circ_pnts))
+        """
 
         # Generate faces
         faces = []

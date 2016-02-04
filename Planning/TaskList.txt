@@ -46,9 +46,12 @@
     - Figure out the best format for running tests on the package
     + Will use pytest in the test/ directory
     COMPLETE
-?:
+
+1-2-2016:
     - Write some tests to test the graphical capabilities of the program
     COMPLETE
+
+?:
     - Create the robot and objects from the logo and take a snapshot
     INCOMPLETE
 
@@ -60,6 +63,12 @@
     - Implement a PhysicalBody / DynamicBody class that has mass an intertia properties.
     INCOMPLETE
 
-?:
+3-2-2016:
     - Remove all edges from shape and use lighting instead.
+    COMPLETE
+
+?:
+    - Figure out how to make the workspace viewer work for testing (accept user input)
+    INCOMPLETE
+    - Implement test viewer and fail tests properly
     INCOMPLETE
