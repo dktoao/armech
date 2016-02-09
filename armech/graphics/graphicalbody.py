@@ -6,8 +6,9 @@
 from numpy import dot, identity, float_, int_, zeros, min, max, cross
 from numpy.linalg import norm
 from OpenGL.GL import glVertex3fv, glColor3fv, glNormal3fv, glMaterialfv, \
-    GL_DIFFUSE, GL_FRONT
+    GL_DIFFUSE, GL_AMBIENT, GL_FRONT
 
+# Constants
 DEFAULT_FACE_COLOR = float_((0.0, 1.0, 1.0))
 DEFAULT_EDGE_COLOR = float_((0.2, 0.2, 0.2))
 
@@ -139,8 +140,9 @@ class GraphicalBody:
         Draws the object faces on the OpenGL canvas.
         """
         if self.has_graphics:
-            #glColor3fv(self.face_color)
-            glMaterialfv(GL_FRONT, GL_DIFFUSE, self.face_color)
+            glColor3fv(self.face_color)
+            #glMaterialfv(GL_FRONT, GL_DIFFUSE, self.face_color)
+            #glMaterialfv(GL_FRONT, GL_AMBIENT, self.face_color)
             for k, face in enumerate(self.faces):
                 glNormal3fv(self.world_face_normals[:, k])
                 for idx_vertex in face:

@@ -3,8 +3,11 @@
 # Classes for viewing the workspace
 
 from numpy import max, concatenate, absolute
-from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, \
-        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LIGHTING, GL_LIGHT0
+from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, glLightfv, \
+    glColorMaterial, \
+    GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LIGHTING, GL_LIGHT0, \
+    GL_POSITION, GL_COLOR_MATERIAL, GL_FRONT, GL_FRONT_AND_BACK, \
+    GL_AMBIENT_AND_DIFFUSE
 from OpenGL.GLU import gluPerspective
 import pygame
 from pygame import display, time
@@ -31,7 +34,7 @@ class BaseViewer:
 
         # Make sure that the input is a Workspace
         if isinstance(workspace, Workspace):
-            self._workspace = workspace
+            self.workspace = workspace
         else:
             raise ValueError(
                 'BaseViewer requires a Workspace object at initialization'
@@ -46,9 +49,9 @@ class BaseViewer:
         # Set the the view distance based on the workspace size
         ws_max_dimension = max(absolute(concatenate(
             (
-                self._workspace.bounds_x,
-                self._workspace.bounds_y,
-                self._workspace.bounds_z,
+                self.workspace.bounds_x,
+                self.workspace.bounds_y,
+                self.workspace.bounds_z,
              )
         )))
         glTranslatef(0.0, 0.0, -3.0*ws_max_dimension)
@@ -59,7 +62,7 @@ class BaseViewer:
         glRotatef(30.0, 0.0, 0.0, 1.0)
 
         # Move up to see thte room
-        glTranslatef(0.0, 0.0, -self._workspace.bounds_z[1]/2.0)
+        glTranslatef(0.0, 0.0, -self.workspace.bounds_z[1] / 2.0)
 
     @staticmethod
     def update_view(events, **kwargs):
@@ -91,9 +94,14 @@ class BaseViewer:
         # Initialize lighting
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
+        glEnable(GL_COLOR_MATERIAL)
+        glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
+
+        # Place the light
+        glLightfv(GL_LIGHT0, GL_POSITION, self.workspace.position_light)
 
         # Display the workspace
-        self._workspace.render_all()
+        self.workspace.render_all()
 
         # Start event loop
         pygame_exit = False
@@ -104,10 +112,9 @@ class BaseViewer:
                     pygame_exit = True
 
             if not pygame_exit:
-                #glRotatef(0.5, 0.0, 0.0, 0.1)
                 self.update_view(events, **kwargs)
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-                self._workspace.render_all()
+                self.workspace.render_all()
                 display.flip()
                 time.wait(self.UPDATE_PERIOD)
             else:

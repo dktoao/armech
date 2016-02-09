@@ -33,9 +33,20 @@ class Workspace(Box):
         super(Workspace, self).__init__(bounds_x, bounds_y, bounds_z, face_color, edge_color, False)
 
         # Dictionaries of objects in the workspace
-        self._obstacles = {}
-        self._graspable_objects = {}
-        self._robots = {}
+        self.obstacles = {}
+        self.graspable_objects = {}
+        self.robots = {}
+
+        # Light position
+        position_x_light = (bounds_x[0] + bounds_x[0])/2.0
+        position_y_light = (bounds_y[0] + bounds_y[0])/2.0
+        position_z_light = (bounds_z[0] + bounds_z[0])/2.0
+        self.position_light = (
+            position_x_light,
+            position_y_light,
+            position_z_light,
+            0.0,
+        )
 
     def add_obstacle(self, name, obstacle):
         """
@@ -51,14 +62,14 @@ class Workspace(Box):
             )
 
         # Add the obstacle to the obstacles dictionary
-        self._obstacles[name] = obstacle
+        self.obstacles[name] = obstacle
 
     def remove_obstacle(self, name):
         """
         Removes an obstacle from the workspace
         :param name: name of the obstacle to remove
         """
-        self._obstacles.pop(name)
+        self.obstacles.pop(name)
 
     def add_graspable_object(self, name, graspable_object):
         """
@@ -76,14 +87,14 @@ class Workspace(Box):
             )
 
         # Add the graspable object to the dictionary
-        self._graspable_objects[name] = graspable_object
+        self.graspable_objects[name] = graspable_object
 
     def remove_graspable_object(self, name):
         """
         Removes a graspable object from the workspace
         :param name: name of the graspable object to remove
         """
-        self._graspable_objects.pop(name)
+        self.graspable_objects.pop(name)
 
     def add_robot(self, name, robot):
         """
@@ -99,14 +110,14 @@ class Workspace(Box):
             )
 
         # Add the robot to the workspace
-        self._robots[name] = robot
+        self.robots[name] = robot
 
     def remove_robot(self, name):
         """
         Removes a robot from the workspace
         :param name: name of the robot to remove
         """
-        self._robots.pop(name)
+        self.robots.pop(name)
 
     def render_all(self):
         """
@@ -119,21 +130,21 @@ class Workspace(Box):
         # Render all faces
         glBegin(GL_TRIANGLES)
         self.render_faces()
-        for obstacle in self._obstacles.values():
+        for obstacle in self.obstacles.values():
             obstacle.render_faces()
-        for graspable_object in self._graspable_objects.values():
+        for graspable_object in self.graspable_objects.values():
             graspable_object.render_faces()
-        for robot in self._robots.values():
+        for robot in self.robots.values():
             robot.render_faces()
         glEnd()
 
         # Render all edges
         glBegin(GL_LINES)
         self.render_edges()
-        for obstacle in self._obstacles.values():
+        for obstacle in self.obstacles.values():
             obstacle.render_edges()
-        for graspable_object in self._graspable_objects.values():
+        for graspable_object in self.graspable_objects.values():
             graspable_object.render_edges()
-        for robot in self._robots.values():
+        for robot in self.robots.values():
             robot.render_edges()
         glEnd()
