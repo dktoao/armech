@@ -3,8 +3,7 @@
 # Workspace object that is a rectangular room which can be populated with
 # robots, graspable objects and obstacles.
 
-from OpenGL.GL import glClear, glBegin, glEnd, \
-    GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_TRIANGLES, GL_LINES
+from OpenGL.GL import glClear, glBegin, glEnd, GL_TRIANGLES
 
 from armech.graphics.graphicalbody import GraphicalBody
 from armech.graphics.shapes import Box
@@ -14,8 +13,7 @@ from armech.core.seriallink import SerialLink
 class Workspace(Box):
 
     def __init__(self, bounds_x, bounds_y, bounds_z,
-                 face_color=(0.0, 1.0, 0.0),
-                 edge_color=(0.2, 0.2, 0.2)):
+                 face_color=(0.0, 1.0, 0.0)):
         """
         Create a workspace object
         :param bounds_x: 1x2 array of the lower and upper bounds of the
@@ -24,8 +22,8 @@ class Workspace(Box):
         workspace's "y" dimension
         :param bounds_z: 1x2 array of the lower and upper bounds of the
         workspace's "z" dimension
-        :param face_color: 1x3 array for the face color
-        :param edge_color: 1x3 array for the face color
+        :param face_color: RGB color as a 3 element float array with
+        values 0.0 - 1.0
         :return: A Workspace object
         """
 
@@ -127,9 +125,6 @@ class Workspace(Box):
         Renders all the objects in the workspace to an OpenGL canvas
         """
 
-        # Clear OpenGL
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
         # Render all faces
         glBegin(GL_TRIANGLES)
         self.render_faces()
@@ -140,17 +135,3 @@ class Workspace(Box):
         for robot in self.robots.values():
             robot.render_faces()
         glEnd()
-
-        # TODO: Fix this or remove edge functionality
-        """
-        # Render all edges
-        glBegin(GL_LINES)
-        self.render_edges()
-        for obstacle in self.obstacles.values():
-            obstacle.render_edges()
-        for graspable_object in self.graspable_objects.values():
-            graspable_object.render_edges()
-        for robot in self.robots.values():
-            robot.render_edges()
-        glEnd()
-        """

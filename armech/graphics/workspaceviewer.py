@@ -6,9 +6,8 @@ from numpy import max, concatenate, absolute
 from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, glLightfv, \
     glColorMaterial, glCullFace, \
     GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LIGHTING, GL_LIGHT0, \
-    GL_POSITION, GL_COLOR_MATERIAL, GL_FRONT, GL_FRONT_AND_BACK, \
-    GL_AMBIENT_AND_DIFFUSE, GL_CULL_FACE, GL_BACK, GL_CCW, GL_CW, \
-    GL_DEPTH_TEST
+    GL_POSITION, GL_COLOR_MATERIAL, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, \
+    GL_CULL_FACE, GL_BACK, GL_DEPTH_TEST
 from OpenGL.GLU import gluPerspective
 import pygame
 from pygame import display, time
@@ -100,7 +99,7 @@ class BaseViewer:
         glEnable(GL_LIGHTING)
         glEnable(GL_LIGHT0)
         glEnable(GL_COLOR_MATERIAL)
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
+        glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
 
         # Place the light
         glLightfv(GL_LIGHT0, GL_POSITION, self.workspace.position_light)

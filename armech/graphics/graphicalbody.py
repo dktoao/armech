@@ -5,12 +5,10 @@
 
 from numpy import dot, identity, float_, int_, zeros, min, max, cross
 from numpy.linalg import norm
-from OpenGL.GL import glVertex3fv, glColor3fv, glNormal3fv, glMaterialfv, \
-    GL_DIFFUSE, GL_AMBIENT, GL_FRONT
+from OpenGL.GL import glVertex3fv, glColor3fv, glNormal3fv
 
 # Constants
 DEFAULT_FACE_COLOR = float_((0.0, 1.0, 1.0))
-DEFAULT_EDGE_COLOR = float_((0.2, 0.2, 0.2))
 
 
 class GraphicalBody:
@@ -24,13 +22,10 @@ class GraphicalBody:
         # initialize values
         self.has_graphics = False
         self.vertices = float_([])
-        self.edges = float_([])
         self.faces = float_([])
         self.face_normals = float_([])
         self.face_color = float_(DEFAULT_FACE_COLOR)
-        self.edge_color = float_(DEFAULT_EDGE_COLOR)
         self.n_vertices = float_(0)
-        self.n_edges = float_(0)
         self.n_faces = float_(0)
         self.bounds_x = float_((0, 0))
         self.bounds_y = float_((0, 0))
@@ -43,8 +38,8 @@ class GraphicalBody:
     def set_transform(self, **kwargs):
         """
         Set the transform from the object to the world coordinate system
-        :param rotation: 3x3 rotation matrix from the body to world
-        :param translation: 3x1 vector to the body coordinate system
+        :param rotation: float[3x3] rotation matrix from the body to world
+        :param translation: float[3x1] vector to the body coordinate system
         """
         rotation = kwargs.get('rotation')
         translation = kwargs.get('translation')
@@ -61,27 +56,20 @@ class GraphicalBody:
                 self.translation
             self.world_face_normals = dot(self.rotation, self.face_normals)
 
-    def set_graphics(self, vertices, edges, faces,
-                     face_color=DEFAULT_FACE_COLOR,
-                     edge_color=DEFAULT_EDGE_COLOR):
+    def set_graphics(self, vertices, faces, face_color=DEFAULT_FACE_COLOR):
         """
         Sets the geometry of the part for graphical display
         :param vertices: list of 3 value vertices (x, y, z)
-        :param edges: list of two vertices to connect by edge
         :param faces: list of three vertices to connect with triangle
-        :param face_color: 1x3 color of the object faces, in RGB format
+        :param face_color: float[3], color of the object faces, in RGB format
         e.g. [0.0, 1.0, 0.5]
-        :param edge_color: 1x3 color of the object edges, in RGB format
         """
 
         # Set the appropriate values
         self.vertices = float_(vertices).transpose()
-        self.edges = int_(edges)
         self.faces = int_(faces)
         self.face_color = float_(face_color)
-        self.edge_color = float_(edge_color)
         self.n_vertices = self.vertices.shape[1]
-        self.n_edges = self.edges.shape[0]
         self.n_faces = self.faces.shape[0]
 
         # find the face normals
@@ -100,21 +88,19 @@ class GraphicalBody:
         self.bounds_z = float_((min(self.vertices[2, :]),
                                 max(self.vertices[2, :])))
 
-        # set the has_obj flag
+        # set the has_graphics flag
         self.has_graphics = True
 
         # Update world vertices and normals
         self.set_transform()
 
-    def load_obj(self, obj_file_name, face_color=DEFAULT_FACE_COLOR,
-                 edge_color=DEFAULT_EDGE_COLOR):
+    def load_obj(self, obj_file_name, face_color=DEFAULT_FACE_COLOR):
         """
         Load the visual representation of the body from an .obj file.
         :param obj_file_name: link to the .obj file containing vertex and face
         info
-        :param face_color: color of the object faces, in RGB format
+        :param face_color: float[3], color of the object faces, in RGB format
         e.g. (0.0, 1.0, 0.5)
-        :param edge_color: color of the object edges, in RGB format
         """
 
         # Read in the file and extract vertices and faces
@@ -133,7 +119,7 @@ class GraphicalBody:
                 faces.append(tuple(data[1:]))
 
         # Set the values
-        self.set_graphics(vertices, [], faces, face_color, edge_color)
+        self.set_graphics(vertices, faces, face_color)
 
     def render_faces(self):
         """
@@ -141,19 +127,7 @@ class GraphicalBody:
         """
         if self.has_graphics:
             glColor3fv(self.face_color)
-            #glMaterialfv(GL_FRONT, GL_DIFFUSE, self.face_color)
-            #glMaterialfv(GL_FRONT, GL_AMBIENT, self.face_color)
             for k, face in enumerate(self.faces):
                 glNormal3fv(self.world_face_normals[:, k])
                 for idx_vertex in face:
-                    glVertex3fv(self.world_vertices[:, idx_vertex])
-
-    def render_edges(self):
-        """
-        Draws the object edges on the OpenGL canvas.
-        """
-        if self.has_graphics:
-            glColor3fv(self.edge_color)
-            for edge in self.edges:
-                for idx_vertex in edge:
                     glVertex3fv(self.world_vertices[:, idx_vertex])
