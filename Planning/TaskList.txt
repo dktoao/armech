@@ -60,7 +60,7 @@
     INCOMPLETE(50%)
 
 18-1-2016:
-    - Implement a PhysicalBody / DynamicBody class that has mass an intertia properties.
+    - Implement a PhysicalBody / DynamicBody class that has mass and intertia properties.
     INCOMPLETE
 
 3-2-2016:
@@ -70,5 +70,7 @@
 ?:
     - Figure out how to make the workspace viewer work for testing (accept user input)
     INCOMPLETE
+    + Need to create a callback like dictionary and allow subclasses or instances
+      to add to it.
     - Implement test viewer and fail tests properly
     INCOMPLETE

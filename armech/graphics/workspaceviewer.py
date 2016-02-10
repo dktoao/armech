@@ -1,6 +1,6 @@
 # workspaceviewer.py
 #
-# Classes for viewing the workspace
+# Classes for viewing and navigating the workspace in 3D
 
 from numpy import max, concatenate, absolute
 from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, glLightfv, \
@@ -67,7 +67,9 @@ class BaseViewer:
     @staticmethod
     def update_view(events, **kwargs):
         """
-        Function that updates the view for each frame
+        Function that updates the view for each frame. Override this function
+        when inheriting this class to get different response to user input
+
         :param events: events object from the main loop
         :param rate: degrees per frame to rotate
         """
@@ -80,7 +82,7 @@ class BaseViewer:
 
     def show(self, window_size=(800, 600), **kwargs):
         """
-        Open a window showing the scene
+        Open a window showing the scene.
         :param window_size: (x, y) size of the viewing window in pixels
         :param kwargs: kwargs to pass to the update function
         """
