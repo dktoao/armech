@@ -30,7 +30,10 @@ class Workspace(Box):
         """
 
         # Initialize Box
-        super(Workspace, self).__init__(bounds_x, bounds_y, bounds_z, face_color, edge_color, False)
+        super(Workspace, self).__init__(
+            bounds_x, bounds_y, bounds_z,
+            face_color=face_color, outward_normals=False
+        )
 
         # Dictionaries of objects in the workspace
         self.obstacles = {}
@@ -138,6 +141,8 @@ class Workspace(Box):
             robot.render_faces()
         glEnd()
 
+        # TODO: Fix this or remove edge functionality
+        """
         # Render all edges
         glBegin(GL_LINES)
         self.render_edges()
@@ -148,3 +153,4 @@ class Workspace(Box):
         for robot in self.robots.values():
             robot.render_edges()
         glEnd()
+        """

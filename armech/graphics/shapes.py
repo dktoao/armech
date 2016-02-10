@@ -10,8 +10,8 @@ from .graphicalbody import GraphicalBody
 class Box(GraphicalBody):
 
     def __init__(self, bounds_x, bounds_y, bounds_z,
-                 face_color=(0.0, 0.0, 1.0), edge_color=(0.5, 0.5, 0.5),
-                 outward_normals=True):
+                 face_color=(0.0, 0.0, 1.0), outward_normals=True,
+                 edge_color=(0.5, 0.5, 0.5)):
         """
         Create a graphical body which is a 3d rectangle
         :param bounds_x: 1x2 array of the lower and upper bounds of the
@@ -35,7 +35,10 @@ class Box(GraphicalBody):
             (bounds_x[1], bounds_y[1], bounds_z[1]),
             (bounds_x[0], bounds_y[1], bounds_z[1]),
         )
+
         edges = tuple()
+
+        # TODO: Fix or remove edge functionality
         """
         edges = (
             (0, 1),
@@ -52,6 +55,7 @@ class Box(GraphicalBody):
             (3, 7),
         )
         """
+
         if outward_normals:
             faces = (
                 (0, 3, 1),
@@ -59,7 +63,7 @@ class Box(GraphicalBody):
                 (0, 5, 4),
                 (1, 5, 0),
                 (1, 2, 5),
-                (2, 6, 1),
+                (2, 6, 5),
                 (2, 3, 6),
                 (3, 7, 6),
                 (3, 4, 7),
@@ -74,7 +78,7 @@ class Box(GraphicalBody):
                 (0, 4, 5),
                 (1, 0, 5),
                 (1, 5, 2),
-                (2, 1, 6),
+                (2, 5, 6),
                 (2, 6, 3),
                 (3, 6, 7),
                 (3, 7, 4),
