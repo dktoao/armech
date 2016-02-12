@@ -45,6 +45,9 @@ class BaseViewer:
         # Flag to stop callbacks when and exit is occurring
         self.exit_flag = False
 
+        # Register the cb_quit callback
+        self.register_callback(QUIT, None, self.cb_quit)
+
     def register_callback(self, event_type, event_key, function):
         """ Registers a callback function to the Viewer.
 
@@ -87,14 +90,12 @@ class BaseViewer:
         # Move up to see the room
         glTranslatef(0.0, 0.0, -self.workspace.bounds_z[1] / 2.0)
 
-    # TODO: Update this method to use the callback dict
     @staticmethod
     def update_view(**kwargs):
         """
         Function that updates the view for each frame. Override this function
         when inheriting this class to get different response to user input
 
-        :param events: events object from the main loop
         :param rate: degrees per frame to rotate
 
         Note:
@@ -115,10 +116,15 @@ class BaseViewer:
         Args:
             events: events from the program main loop
         """
-        for event in events.get():
+        for event in events:
             # Try to get the function from the callbacks dictionary
             try:
-                callbacks = self.callback_dict[(event.type, event.key)]
+                event_key = event.key
+            except AttributeError:
+                event_key = None
+
+            try:
+                callbacks = self.callback_dict[(event.type, event_key)]
             except KeyError:
                 callbacks = []
 
@@ -163,15 +169,15 @@ class BaseViewer:
         self.workspace.render_all()
 
         # Start event loop
-        pygame_exit = False
         while not self.exit_flag:
             events = pygame.event.get()
             self.do_callbacks(events)
-            self.update_view(**kwargs)
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-            self.workspace.render_all()
-            display.flip()
-            time.wait(self.UPDATE_PERIOD)
+            if not self.exit_flag:
+                self.update_view(**kwargs)
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+                self.workspace.render_all()
+                display.flip()
+                time.wait(self.UPDATE_PERIOD)
 
 
 # TODO: add a WorkspaceViewer class that accepts user input to rotate view
