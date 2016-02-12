@@ -40,6 +40,29 @@ class BaseViewer:
                 'BaseViewer requires a Workspace object at initialization'
             )
 
+        # Set up the callback dictionary for event handling
+        self.callback_dict = {}
+        # Flag to stop callbacks when and exit is occurring
+        self.exit_flag = False
+
+    def register_callback(self, event_type, event_key, function):
+        """ Registers a callback function to the Viewer.
+
+        Registers a callback function to be called when a pygame event occurs
+        that matches 'type' and 'key'. All callbacks will be called in the
+        'update_view' function. All functions registered should not take
+        any arguments.
+
+        Args:
+            event_type: pygame event.type value to trigger callback
+            event_key: pygame event.key value to trigger the callback
+            function: callback function to register
+        """
+        if (event_type, event_key) not in self.callback_dict.keys():
+            self.callback_dict[(event_type, event_key)] = [function]
+        else:
+            self.callback_dict[(event_type, event_key)].append(function)
+
     def initial_view(self):
         """
         Sets the initial view of the workspace using the glRotatef and
@@ -61,17 +84,22 @@ class BaseViewer:
         glRotatef(180.0, 0.0, 1.0, 0.0)
         glRotatef(30.0, 0.0, 0.0, 1.0)
 
-        # Move up to see thte room
+        # Move up to see the room
         glTranslatef(0.0, 0.0, -self.workspace.bounds_z[1] / 2.0)
 
+    # TODO: Update this method to use the callback dict
     @staticmethod
-    def update_view(events, **kwargs):
+    def update_view(**kwargs):
         """
         Function that updates the view for each frame. Override this function
         when inheriting this class to get different response to user input
 
         :param events: events object from the main loop
         :param rate: degrees per frame to rotate
+
+        Note:
+            If overriding this function, make sure that it only takes **kwargs
+            as an argument.
         """
 
         # Get rate or set default
@@ -79,6 +107,30 @@ class BaseViewer:
 
         # Rotate view
         glRotatef(rate, 0.0, 0.0, 1.0)
+
+    def do_callbacks(self, events):
+        """
+        Get callbacks that match the event type and key and call them
+
+        Args:
+            events: events from the program main loop
+        """
+        for event in events.get():
+            # Try to get the function from the callbacks dictionary
+            try:
+                callbacks = self.callback_dict[(event.type, event.key)]
+            except KeyError:
+                callbacks = []
+
+            for callback in callbacks:
+                callback()
+
+    def cb_quit(self):
+        """
+        Callback function to quit the pygame instance and close all windows
+        """
+        pygame.quit()
+        self.exit_flag = True
 
     def show(self, window_size=(800, 600), **kwargs):
         """
@@ -112,19 +164,14 @@ class BaseViewer:
 
         # Start event loop
         pygame_exit = False
-        while not pygame_exit:
+        while not self.exit_flag:
             events = pygame.event.get()
-            for event in events:
-                if event.type == QUIT:
-                    pygame_exit = True
+            self.do_callbacks(events)
+            self.update_view(**kwargs)
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            self.workspace.render_all()
+            display.flip()
+            time.wait(self.UPDATE_PERIOD)
 
-            if not pygame_exit:
-                self.update_view(events, **kwargs)
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-                self.workspace.render_all()
-                display.flip()
-                time.wait(self.UPDATE_PERIOD)
-            else:
-                pygame.quit()
 
 # TODO: add a WorkspaceViewer class that accepts user input to rotate view

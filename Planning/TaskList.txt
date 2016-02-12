@@ -71,6 +71,6 @@
     - Figure out how to make the workspace viewer work for testing (accept user input)
     INCOMPLETE
     + Need to create a callback like dictionary and allow subclasses or instances
-      to add to it.
+      to add functions to.
     - Implement test viewer and fail tests properly
     INCOMPLETE
