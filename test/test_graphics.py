@@ -7,7 +7,7 @@ from numpy.testing import assert_array_almost_equal
 
 from armech.graphics.workspace import Workspace
 from armech.graphics.shapes import Box, Cylinder
-from armech.graphics.workspaceviewer import BaseViewer
+from .testviewer import UserYesNoTestViewer
 
 
 def test_box_normals_calculated_correctly():
@@ -47,5 +47,5 @@ def test_workspace_and_other_objects_display_correctly():
     ws.add_obstacle('cylinder_obstacle', cylinder_obstacle)
 
     # Create a viewer and display the scene
-    view = BaseViewer(ws)
+    view = UserYesNoTestViewer(ws, "Is the workspace displayed correctly?")
     view.show()

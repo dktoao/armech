@@ -67,9 +67,9 @@
     - Remove all edges from shape and use lighting instead.
     COMPLETE
 
-?:
+11-2-2016:
     - Figure out how to make the workspace viewer work for testing (accept user input)
-    INCOMPLETE
+    COMPLETE
     + Need to create a callback like dictionary and allow subclasses or instances
       to add functions to.
     - Implement test viewer and fail tests properly
