@@ -39,8 +39,7 @@ class UserYesNoTestViewer(BaseViewer):
 
     def cb_fail_test(self):
         """Raise error and fail the test"""
-        raise UserTestError
-        self.cb_quit()
+        raise UserTestError('The test observer has failed the test')
 
     def update_view(self, **kwargs):
         """Display Message for the user to respond to"""
@@ -49,10 +48,11 @@ class UserYesNoTestViewer(BaseViewer):
         super(UserYesNoTestViewer, self).update_view(**kwargs)
 
         # Print text to the screen
-        glColor3fv(float_((1.0, 1.0, 1.0)))
-        glWindowPos2dv(int_((50, 50)))
-        for c in self.test_message:
-            glutBitmapCharacter(GLUT_BITMAP_8_BY_13, int_(ord(c)))
+        # TODO: figure out how to do this
+        #glColor3fv(float_((1.0, 1.0, 1.0)))
+        #glWindowPos2dv(int_((50, 50)))
+        #for c in self.test_message:
+        #    glutBitmapCharacter(GLUT_BITMAP_8_BY_13, int_(ord(c)))
 
 
 class UserTestError(Exception):
