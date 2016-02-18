@@ -4,9 +4,10 @@
 # input. These are for testing purposes only.
 
 from pygame.locals import KEYDOWN, K_LEFT, K_RIGHT
-from OpenGL.GL import glColor3fv, glWindowPos2dv
+from OpenGL.GL import glColor3fv, glWindowPos2iv
 from OpenGL.GLUT import glutBitmapCharacter, GLUT_BITMAP_8_BY_13
 from numpy import float_, int_
+from ctypes import c_int
 
 from armech.graphics.workspaceviewer import BaseViewer
 
@@ -48,11 +49,11 @@ class UserYesNoTestViewer(BaseViewer):
         super(UserYesNoTestViewer, self).update_view(**kwargs)
 
         # Print text to the screen
-        # TODO: figure out how to do this
-        #glColor3fv(float_((1.0, 1.0, 1.0)))
-        #glWindowPos2dv(int_((50, 50)))
-        #for c in self.test_message:
-        #    glutBitmapCharacter(GLUT_BITMAP_8_BY_13, int_(ord(c)))
+        glColor3fv(float_((1.0, 1.0, 1.0)))
+        # User message
+        glWindowPos2iv(int_((50, 50)))
+        for c in (self.test_message + ' ( -> YES | <- NO )'):
+            glutBitmapCharacter(GLUT_BITMAP_8_BY_13, c_int(ord(c)))
 
 
 class UserTestError(Exception):

@@ -9,6 +9,7 @@ from OpenGL.GL import glTranslatef, glRotatef, glClear, glEnable, glLightfv, \
     GL_POSITION, GL_COLOR_MATERIAL, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, \
     GL_CULL_FACE, GL_BACK, GL_DEPTH_TEST
 from OpenGL.GLU import gluPerspective
+from OpenGL.GLUT import glutInit
 import pygame
 from pygame import display, time
 from pygame.locals import DOUBLEBUF, OPENGL, QUIT
@@ -154,6 +155,9 @@ class BaseViewer:
         glEnable(GL_DEPTH_TEST)
         glEnable(GL_CULL_FACE)
         glCullFace(GL_BACK)
+
+        # Initialize GLUT
+        glutInit()
 
         # Initialize lighting
         glEnable(GL_LIGHTING)
