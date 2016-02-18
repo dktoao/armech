@@ -82,3 +82,50 @@
     - Write some tests to confirm that the end effector is ending up where
       it needs to be
     INCOMPLETE
+
+?:
+    - Get Sphinx documentation setup and start documenting code
+    INCOMPLETE
+
+?:
+    - Implement forward kinematics and use MATLAB as a test oracle to test the
+      correctness of the approach
+    INCOMPLETE
+
+?:
+    - Implement path planning algorithms in joint space
+    INCOMPLETE
+
+?:
+    - Implements numerical inverse kinematics for robots will all different
+      degrees of freedom (< 6, 6, > 6)
+    INCOMPLETE
+
+?:
+    - Implement robot jacobian calculations
+    INCOMPLETE
+
+?:
+    - Implement 'manipulability'. The two forms used in the MATLAB toolbox are
+      'Yoshikawa' and 'Asada'.
+    INCOMPLETE
+
+?:
+    - Implement cartesian path planning
+    INCOMPLETE
+
+?:
+    - Implement catiesian space path planning algorithms
+    INCOMPLETE
+
+?:
+    - Implement forward dynamics.
+    INCOMPLETE
+
+?:
+    - Implement inverse dynamics.
+    INCOMPLETE
+
+?:
+    - Implement C code generation??? Seems useful!
+    INCOMPLETE
