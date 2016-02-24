@@ -1,7 +1,7 @@
-# physicalbody.py
+# rigidbody.py
 #
 # Implements the physical body class that stores the mass and moment of inertia
-# of the body
+# of the body.
 #
 
 from numpy import float_, zeros, array
@@ -16,10 +16,10 @@ class RigidBody(GraphicalBody):
         Create a physical body object that has a mass and a moment of inertia
         :return obj: PhysicalBody object
         """
-        
+
         # Initialize super class
-	super(PhysicalBody, self).__init__()
-        
+        super(RigidBody, self).__init__()
+
         # Initialize values
         self.has_physics = False
         self.mass = float_(None)
@@ -27,29 +27,29 @@ class RigidBody(GraphicalBody):
         self.inertia_matrix = zeros(3, 3)
 
     def set_physics(self, mass, center_of_mass, 
-                    momements_of_inertia, products_of_inertia):
-       """
-       Sets the physical properties of the body
-       :param mass: Mass of the body (kg)
-       :param center_of_mass: distance from the body origin to the center
-       of mass
-       :param moments_of_inertia: 3 element array of the x, y and bz moments
-       of inertia (Ixx, Iyy, Izz)
-       :param products_of_inertia: 3 element array of the products of inertia
-       (Iyz, Ixz, Ixy)
-       """
-  
-       # Set values
-       self.mass = mass
-       self.center_of_mass = center_of_mass
-       self.inertia_matrix = array([
-           [moment_of_inertia[0], product_of_inertia[0], product_of_inertia[1]],
-           [product_of_inertia[0], moment_of_inertia[1], product_of_inertia[2]],
-           [product_of_inertia[1], product_of_inertia[2], moment_of_inertia[3]],
-       ])
+                    moments_of_inertia, products_of_inertia):
+        """
+        Sets the physical properties of the body
+        :param mass: Mass of the body (kg)
+        :param center_of_mass: distance from the body origin to the center
+        of mass
+        :param moments_of_inertia: 3 element array of the x, y and bz moments
+        of inertia (Ixx, Iyy, Izz)
+        :param products_of_inertia: 3 element array of the products of inertia
+        (Iyz, Ixz, Ixy)
+        """
 
-      # Enable dynamics
-      self.has_physics = True
+        # Set values
+        self.mass = mass
+        self.center_of_mass = center_of_mass
+        self.inertia_matrix = array([
+           [moments_of_inertia[0], products_of_inertia[0], products_of_inertia[1]],
+           [products_of_inertia[0], moments_of_inertia[1], products_of_inertia[2]],
+           [products_of_inertia[1], products_of_inertia[2], moments_of_inertia[3]],
+        ])
+
+        # Enable dynamics
+        self.has_physics = True
 
 
 

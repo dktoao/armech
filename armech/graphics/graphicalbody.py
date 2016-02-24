@@ -34,6 +34,7 @@ class GraphicalBody:
         self.translation = zeros((3, 1))
         self.world_vertices = float_([])
         self.world_face_normals = float_([])
+        self.obj_file_name = None
 
     def set_transform(self, **kwargs):
         """
@@ -120,6 +121,7 @@ class GraphicalBody:
 
         # Set the values
         self.set_graphics(vertices, faces, face_color)
+        self.obj_file_name = obj_file_name
 
     def render_faces(self):
         """
