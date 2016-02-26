@@ -18,3 +18,13 @@ class SerialLink:
 
         self.links = links
         self.base = base
+
+    def move_joints(self, q):
+        """
+        Updates the configuration of the robot
+        Args:
+            q:
+
+        Returns:
+
+        """

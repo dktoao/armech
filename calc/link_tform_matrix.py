@@ -34,4 +34,6 @@ tform_2 = Matrix([
 
 # Calculate the overall transform and display
 tform = tform_1 * tform_2
+pprint(tform_1)
+pprint(tform_2)
 pprint(tform)
