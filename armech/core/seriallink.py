@@ -4,6 +4,7 @@
 # serial link robot. Provides functions for forward kinematics, inverse
 # kinematics, and dynamics calculations.
 
+from numpy import identity
 
 class SerialLink:
 
@@ -23,8 +24,18 @@ class SerialLink:
         """
         Updates the configuration of the robot
         Args:
-            q:
-
-        Returns:
-
+            q: a vector of joint states in order from the base to the top
         """
+
+        # Make sure the correct input is given
+        if len(q) != len(self.links)
+            raise IndexError(
+                    'The number of element in q is not equal to the number'
+                    'of links'
+            )
+
+        # Apply all transforms one by one
+        global_transform = identity(4)
+        for link in self.links
+
+            link.transform()

@@ -41,7 +41,7 @@ class LinkDH(RigidBody):
             [0.0, -sin(self.alpha), cos(self.alpha),    0.0],
             [0.0,              0.0,             0.0,    1.0],
         ])
-        self.state_transform = self._get_state_transform()
+        self.state_transform = self.get_state_transform()
         if joint_type == JOINT_REVOLUTE:
             self.joint_type = JOINT_REVOLUTE
             self.joint_type_str = 'Revolute Joint'
@@ -54,7 +54,7 @@ class LinkDH(RigidBody):
                 'constants.JOINT_PRISMATIC'
             )
 
-    def _get_state_transform(self):
+    def get_state_transform(self):
         """
         Get the state transform (depending on d or theta) depending on the
         joint_type of the link.
