@@ -4,7 +4,7 @@
 # serial link robot. Provides functions for forward kinematics, inverse
 # kinematics, and dynamics calculations.
 
-from numpy import identity
+from numpy import identity, dot, zeros
 
 class SerialLink:
 
@@ -19,6 +19,7 @@ class SerialLink:
 
         self.links = links
         self.base = base
+        self.state = zeros(len(links))
 
     def move_joints(self, q):
         """
@@ -36,6 +37,13 @@ class SerialLink:
 
         # Apply all transforms one by one
         global_transform = identity(4)
-        for link in self.links
+        for k, link in enumerate(self.links):
+            global_state_transform = dot(
+                global_transform, link.state_transform(q[k])
+            )
+            link.transform(
+                rotation=global_state_transform[0:3, 0:3],
+                translation=global_state_transform[0:3, 3]
+            )
+            global_transform = dot(global_state_transform, link.body_transform)
 
-            link.transform()
