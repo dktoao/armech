@@ -20,6 +20,8 @@ class SerialLink:
         self.links = links
         self.base = base
         self.state = zeros(len(links))
+        self.rotation = identity(3)
+        self.translation = zeros((3, 1))
 
     def move_joints(self, q):
         """
