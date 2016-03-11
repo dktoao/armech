@@ -30,12 +30,8 @@ class SerialLink:
             q: a vector of joint states in order from the base to the top
         """
 
-        # Make sure the correct input is given
-        if len(q) != len(self.links)
-            raise IndexError(
-                    'The number of element in q is not equal to the number'
-                    'of links'
-            )
+        # Check input
+        self.check_q(q)
 
         # Apply all transforms one by one
         global_transform = identity(4)
@@ -49,3 +45,43 @@ class SerialLink:
             )
             global_transform = dot(global_state_transform, link.body_transform)
 
+    def get_tool_trans(self, q):
+        """Get the transform of the tool from the base of the robot given the
+        state configuration "q"
+        Args:
+            q: state vector of the robot in meters and/or radians
+
+        Returns: 4x4 transform matrix for the end of the arm
+        """
+
+        # Check inputs
+        self.check_q(q)
+
+        # Get the transform
+        transform = identity(4)
+        for k, link in enumerate(self.links):
+            transform = dot(
+                transform, link.state_transform(q[k])
+            )
+            transform = dot(
+                transform, link.body_transform
+            )
+
+        return transform
+
+    def check_q(self, q):
+        """Check the state input vector and make sure that it is correct. Will
+        error out if the input is not correct.
+
+        Args:
+            q: state vector of the robot in meters and/or radians
+
+        Returns: None
+        """
+
+        # Make sure the correct input is given
+        if len(q) != len(self.links):
+            raise IndexError(
+                    'The number of element in q is not equal to the number'
+                    'of links'
+            )

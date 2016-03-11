@@ -40,4 +40,4 @@ class Simple3DOF(SerialLink):
         super(Simple3DOF, self).__init__([link0, link1, link2], base)
 
         # Load the graphics
-        self.links[0] =
+        # TODO: implement the rest
