@@ -31,22 +31,21 @@ class LinkDH(RigidBody):
         super(LinkDH, self).__init__()
 
         # Initialize values
+        self.joint_type = joint_type
         self.a = float_(a)
         self.alpha = float_(alpha)
         self.d = float_(d)
         self.theta = float_(theta)
         self.body_transform = float_([
-            [1.0,              0.0,             0.0, self.a],
-            [0.0,  cos(self.alpha), sin(self.alpha),    0.0],
-            [0.0, -sin(self.alpha), cos(self.alpha),    0.0],
-            [0.0,              0.0,             0.0,    1.0],
+            [1.0,             0.0,              0.0, self.a],
+            [0.0, cos(self.alpha), -sin(self.alpha),    0.0],
+            [0.0, sin(self.alpha),  cos(self.alpha),    0.0],
+            [0.0,             0.0,              0.0,    1.0],
         ])
         self.state_transform = self.get_state_transform()
         if joint_type == JOINT_REVOLUTE:
-            self.joint_type = JOINT_REVOLUTE
             self.joint_type_str = 'Revolute Joint'
         elif joint_type == JOINT_PRISMATIC:
-            self.joint_type = JOINT_REVOLUTE
             self.joint_type_str = 'Prismatic Joint'
         else:
             raise ValueError(
@@ -60,14 +59,15 @@ class LinkDH(RigidBody):
         joint_type of the link.
 
         Returns:
-            A function f(q) that calculates the transform from the base of
-            the arm to the arm based on it's general coordinate q (theta or d)
+            A function f(q) that calculates the transform from the end of the
+            previous arm to the base of the arm as a function of it's general
+            coordinate q (theta or d)
         """
 
         if self.joint_type == JOINT_REVOLUTE:
             return lambda q: float_([
                 [cos(self.theta + q),  sin(self.theta + q), 0.0, 0.0],
-                [-sin(self.theta + 1), cos(self.theta + q), 0.0, 0.0],
+                [-sin(self.theta + q), cos(self.theta + q), 0.0, 0.0],
                 [0.0,                  0.0,                 1.0, self.d],
                 [0.0,                  0.0,                 0.0, 1.0],
             ])

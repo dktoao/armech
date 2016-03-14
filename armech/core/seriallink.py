@@ -6,11 +6,11 @@
 
 from numpy import identity, dot, zeros
 
+
 class SerialLink:
 
     def __init__(self, links, base=None):
-        """
-        A serial link robot representation
+        """A serial link robot representation.
         :param links: a list of Link classes to create the robot structure
         :param base: the base of the robot which relates the serial link
         structure to it's place in the environment.

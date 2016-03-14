@@ -12,9 +12,10 @@ from armech.graphics.graphicalbody import GraphicalBody
 class RigidBody(GraphicalBody):
 
     def __init__(self):
-        """
-        Create a physical body object that has a mass and a moment of inertia
-        :return obj: PhysicalBody object
+        """Create a physical body object that has a mass and a moment of
+        inertia.
+
+        :return: PhysicalBody object
         """
 
         # Initialize super class
@@ -23,8 +24,8 @@ class RigidBody(GraphicalBody):
         # Initialize values
         self.has_physics = False
         self.mass = float_(None)
-        self.center_of_mass = zeros(3, 1)
-        self.inertia_matrix = zeros(3, 3)
+        self.center_of_mass = zeros((3, 1))
+        self.inertia_matrix = zeros((3, 3))
 
     def set_physics(self, mass, center_of_mass, 
                     moments_of_inertia, products_of_inertia):
