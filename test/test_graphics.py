@@ -50,21 +50,9 @@ def test_workspace_and_other_objects_display_correctly():
     view = UserYesNoTestViewer(ws, "Is the workspace displayed correctly?")
     view.show()
 
+test_simple3dof_displays_correctly():
 
-def test_simple3dof_forward_kinematics():
-
-    # get the robot
+    # Create a workspace
+    ws = Workspace((-2.0, 2.0), (-2.0, 2.0), (0.0, 4.0), face_color=(0.8, 0.8, 0.8))
+    # Create robot and put it in the workspace
     robot = Simple3DOF()
-
-    # Test 1
-    q = [0, 0, 0]
-    end = [
-        [1.0000,  0.0000,  0.0000,  0.7500],
-        [0.0000,  0.0000, -1.0000,  0.0400],
-        [0.0000,  1.0000,  0.0000,  0.0000],
-        [0.0000,  0.0000,  0.0000,  1.0000],
-    ]
-
-    assert_array_almost_equal(
-        robot.get_tool_trans(q), end, 4
-    )

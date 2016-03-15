@@ -31,7 +31,7 @@ class Simple3DOF(SerialLink):
     -------------------------------------------------------------------
     """
 
-    def __init__(self):
+    def __init__(self, global_transform=None):
         """Get and instance of Simple3DOF robot."""
 
         # Create links
@@ -48,4 +48,6 @@ class Simple3DOF(SerialLink):
         link3.load_obj(join(obj_dir, 'link3.obj'), [0.0, 0.0, 1.0])
 
         # Initialize the SerialLink super class
-        super(Simple3DOF, self).__init__([link1, link2, link3], base)
+        super(Simple3DOF, self).__init__(
+            [link1, link2, link3], base, global_transform
+        )

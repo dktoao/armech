@@ -9,7 +9,8 @@ from numpy import identity, dot, zeros, concatenate
 
 class SerialLink:
 
-    def __init__(self, links, base=None):
+    #TODO: global_transform -> global_translation, global_rotation
+    def __init__(self, links, base=None, global_transform=None):
         """A serial link robot representation.
         :param links: a list of Link classes to create the robot structure
         :param base: the base of the robot which relates the serial link
@@ -17,10 +18,21 @@ class SerialLink:
         :return: A SerialLink robot object
         """
 
+        # Set all parameters
         self.links = links
+        self.num_links = len(links)
         self.base = base
-        self.state = zeros(len(links))
-        self.global_transform = identity(4)
+        self.state = zeros(self.num_links, dtype='float')
+        # TODO: implement checking for orthogonal rotation matrices
+        if global_transform is None:
+            self.global_transform = identity(4, dtype='float')
+        else:
+            self.global_transform = global_transform
+        self.link_transforms = zeros((4, 4, num_links), dtype='float')
+        self.tool_transform = identity(4, dtype='float')
+
+        # move joints to initial position
+        self.move_joints(self.state)
 
     def set_global_transform(self, rotation=None, translation=None):
         """Set the global transform for the overall arm assembly
@@ -30,7 +42,6 @@ class SerialLink:
                       the robot.
             translation: [3x1] float array describing the x,y,z position of
                          the robot.
-
         """
 
         # Set input parameters to the correct type
@@ -45,12 +56,13 @@ class SerialLink:
 
         self.global_transform = concatenate(
             concatenate((rotation, translation), axis=1),
-            float_([0.0, 0.0, 0.0, 1.0]).reshape(1, 4)
+            float_([0.0, 0.0, 0.0, 1.0]).reshape(1, 4), axis=0
         )
+        self.move_joints(self.state)
 
     def move_joints(self, q):
-        """
-        Updates the configuration of the robot
+        """Updates the transformation for each link of the robot and
+
         Args:
             q: a vector of joint states in order from the base to the top
         """
@@ -59,16 +71,20 @@ class SerialLink:
         self.check_q(q)
 
         # Apply all transforms one by one
-        global_transform = self.global_transform
+        transform = self.global_transform
         for k, link in enumerate(self.links):
-            global_state_transform = dot(
-                global_transform, link.state_transform(q[k])
+            state_transform = dot(
+                transform, link.state_transform(q[k])
             )
+            self.link_transforms[:, :, k] = state_transform
             link.transform(
-                rotation=global_state_transform[0:3, 0:3],
-                translation=global_state_transform[0:3, 3]
+                rotation=state_transform[0:3, 0:3],
+                translation=state_transform[0:3, 3]
             )
-            global_transform = dot(global_state_transform, link.body_transform)
+            transform = dot(state_transform, link.body_transform)
+
+        # Set the tool transform
+        self.tool_transform = transform
 
     def get_tool_trans(self, q, local=True):
         """Get the transform of the tool from the base of the robot given the
