@@ -4,35 +4,46 @@
 # serial link robot. Provides functions for forward kinematics, inverse
 # kinematics, and dynamics calculations.
 
-from numpy import identity, dot, zeros, concatenate
+from numpy import identity, dot, zeros, concatenate, float_
 
 
 class SerialLink:
 
-    #TODO: global_transform -> global_translation, global_rotation
-    def __init__(self, links, base=None, global_transform=None):
+    # TODO: global_transform -> global_translation, global_rotation
+    def __init__(self, links, base=None,
+                 global_rotation=None,
+                 global_translation=None):
         """A serial link robot representation.
         :param links: a list of Link classes to create the robot structure
         :param base: the base of the robot which relates the serial link
+        :param global_rotation: [3x3] float orthonormal matrix describing the
+        rotation of the robot.
+        :param global_translation: [3x1] float matrix describing the x,y,z
+        position of the robot.
         structure to it's place in the environment.
         :return: A SerialLink robot object
         """
 
-        # Set all parameters
+        # Class members
         self.links = links
         self.num_links = len(links)
         self.base = base
         self.state = zeros(self.num_links, dtype='float')
-        # TODO: implement checking for orthogonal rotation matrices
-        if global_transform is None:
-            self.global_transform = identity(4, dtype='float')
-        else:
-            self.global_transform = global_transform
-        self.link_transforms = zeros((4, 4, num_links), dtype='float')
+        self.link_transforms = zeros((4, 4, self.num_links), dtype='float')
         self.tool_transform = identity(4, dtype='float')
+        self.global_rotation = identity(4, dtype='float')
+        self.global_translation = zeros((3, 1), dtype='float')
 
-        # move joints to initial position
-        self.move_joints(self.state)
+        # move robot and joints to the initial position
+        self.set_global_transform(
+            global_rotation, global_translation
+        )
+
+    def global_transform(self):
+        return concatenate(
+            concatenate(self.global_rotation, self.global_translation, axis=1),
+            float_([0, 0, 0, 1]).reshape((1, 4)), axis=0
+        )
 
     def set_global_transform(self, rotation=None, translation=None):
         """Set the global transform for the overall arm assembly
@@ -44,20 +55,12 @@ class SerialLink:
                          the robot.
         """
 
+        # TODO: Rotation matrix checking
         # Set input parameters to the correct type
         if rotation is not None:
-            rotation = float_(rotation).reshape(3, 3)
-        else:
-            rotation = self.global_transform[0:3, 0:3]
+            self.global_rotation = rotation
         if translation is not None:
-            translation = float_(translation).reshape(3, 1)
-        else:
-            translation = self.global_transform[0:3, 3]
-
-        self.global_transform = concatenate(
-            concatenate((rotation, translation), axis=1),
-            float_([0.0, 0.0, 0.0, 1.0]).reshape(1, 4), axis=0
-        )
+            self.global_translation = translation
         self.move_joints(self.state)
 
     def move_joints(self, q):
@@ -71,7 +74,7 @@ class SerialLink:
         self.check_q(q)
 
         # Apply all transforms one by one
-        transform = self.global_transform
+        transform = self.global_transform()
         for k, link in enumerate(self.links):
             state_transform = dot(
                 transform, link.state_transform(q[k])
