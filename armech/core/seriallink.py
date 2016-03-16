@@ -10,7 +10,7 @@ from numpy import identity, dot, zeros, concatenate, float_
 class SerialLink:
 
     # TODO: global_transform -> global_translation, global_rotation
-    def __init__(self, links, base=None,
+    def __init__(self, links, base=None, name='robot',
                  global_rotation=None,
                  global_translation=None):
         """A serial link robot representation.
@@ -28,6 +28,7 @@ class SerialLink:
         self.links = links
         self.num_links = len(links)
         self.base = base
+        self.name = name
         self.state = zeros(self.num_links, dtype='float')
         self.link_transforms = zeros((4, 4, self.num_links), dtype='float')
         self.tool_transform = identity(4, dtype='float')
@@ -119,6 +120,11 @@ class SerialLink:
             )
 
         return transform
+
+    def render_links(self):
+        """Render the links of the robot using OpenGL."""
+        for link in self.links:
+            link.render_faces()
 
     def check_q(self, q):
         """Check the state input vector and make sure that it is correct. Will

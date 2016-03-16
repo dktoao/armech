@@ -3,7 +3,7 @@
 # Workspace object that is a rectangular room which can be populated with
 # robots, graspable objects and obstacles.
 
-from OpenGL.GL import glClear, glBegin, glEnd, GL_TRIANGLES
+from OpenGL.GL import glBegin, glEnd, GL_TRIANGLES
 
 from armech.graphics.graphicalbody import GraphicalBody
 from armech.graphics.shapes import Box
@@ -34,6 +34,8 @@ class Workspace(Box):
         )
 
         # Dictionaries of objects in the workspace
+        # TODO: Think about it: should these be divided out as such?
+        # TODO: Seems unnecessary and confusing
         self.obstacles = {}
         self.graspable_objects = {}
         self.robots = {}
@@ -133,5 +135,5 @@ class Workspace(Box):
         for graspable_object in self.graspable_objects.values():
             graspable_object.render_faces()
         for robot in self.robots.values():
-            robot.render_faces()
+            robot.render_links()
         glEnd()
