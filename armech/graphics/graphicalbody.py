@@ -36,19 +36,17 @@ class GraphicalBody:
         self.world_face_normals = float_([])
         self.obj_file_name = None
 
-    def set_transform(self, **kwargs):
+    def set_transform(self, rotation=None, translation=None):
         """
         Set the transform from the object to the world coordinate system
         :param rotation: float[3x3] rotation matrix from the body to world
         :param translation: float[3x1] vector to the body coordinate system
         """
-        rotation = kwargs.get('rotation')
-        translation = kwargs.get('translation')
 
         # Set values
-        if rotation:
-            self.rotation = float_(rotation)
-        if translation:
+        if rotation is not None:
+            self.rotation = float_(rotation).reshape((3, 3))
+        if translation is not None:
             self.translation = float_(translation).reshape((3, 1))
 
         # Apply the transform
@@ -68,10 +66,10 @@ class GraphicalBody:
 
         # Set the appropriate values
         self.vertices = float_(vertices).transpose()
-        self.faces = int_(faces)
+        self.faces = int_(faces).transpose() - 1
         self.face_color = float_(face_color)
         self.n_vertices = self.vertices.shape[1]
-        self.n_faces = self.faces.shape[0]
+        self.n_faces = self.faces.shape[1]
 
         # find the face normals
         self.face_normals = zeros((3, self.n_faces))
@@ -113,7 +111,7 @@ class GraphicalBody:
         vertices = []
         faces = []
         for line in obj_file:
-            data = line.strip().split('\s')
+            data = line.strip().split(' ')
             if data[0] == 'v':
                 vertices.append(tuple(data[1:]))
             elif data[0] == 'f':

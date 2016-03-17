@@ -7,8 +7,9 @@ from numpy.testing import assert_array_almost_equal
 
 from armech.graphics.workspace import Workspace
 from armech.graphics.shapes import Box, Cylinder
-from .testviewer import UserYesNoTestViewer
+from test.testviewer import UserYesNoTestViewer
 from armech.demo.robot import Simple3DOF
+
 
 def test_box_normals_calculated_correctly():
 
@@ -50,9 +51,13 @@ def test_workspace_and_other_objects_display_correctly():
     view = UserYesNoTestViewer(ws, "Is the workspace displayed correctly?")
     view.show()
 
-test_simple3dof_displays_correctly():
+
+def test_simple3dof_displays_correctly():
 
     # Create a workspace
     ws = Workspace((-2.0, 2.0), (-2.0, 2.0), (0.0, 4.0), face_color=(0.8, 0.8, 0.8))
     # Create robot and put it in the workspace
     robot = Simple3DOF()
+    robot.set_global_transform(translation=[0, 0, 1])
+    view = UserYesNoTestViewer(ws, "Is the Simple 3 DOF robot displayed correctly?")
+    view.show()

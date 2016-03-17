@@ -59,9 +59,9 @@ class SerialLink:
         # TODO: Rotation matrix checking
         # Set input parameters to the correct type
         if rotation is not None:
-            self.global_rotation = rotation
+            self.global_rotation = float_(rotation).reshape((3, 3))
         if translation is not None:
-            self.global_translation = translation
+            self.global_translation = float_(translation).reshape((3, 1))
         self.move_joints(self.state)
 
     def move_joints(self, q):
@@ -71,8 +71,9 @@ class SerialLink:
             q: a vector of joint states in order from the base to the top
         """
 
-        # Check input
-        self.check_q(q)
+        # Check and store new configuration
+        q = self.check_q(q)
+        self.state = q
 
         # Apply all transforms one by one
         transform = self.global_transform()
@@ -102,7 +103,7 @@ class SerialLink:
         """
 
         # Check inputs
-        self.check_q(q)
+        q = self.check_q(q)
 
         # Set base transform
         if local:
@@ -133,12 +134,14 @@ class SerialLink:
         Args:
             q: state vector of the robot in meters and/or radians
 
-        Returns: None
+        Returns: A properly formatted version of q
         """
 
         # Make sure the correct input is given
-        if len(q) != len(self.links):
+        if len(q) != self.num_links:
             raise IndexError(
-                    'The number of element in q is not equal to the number'
+                    'The number of element in q is not equal to the number '
                     'of links'
             )
+        # Convert to a numpy array
+        return float_(q).reshape((self.num_links, 1))
