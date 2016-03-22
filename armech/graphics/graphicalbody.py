@@ -66,14 +66,14 @@ class GraphicalBody:
 
         # Set the appropriate values
         self.vertices = float_(vertices).transpose()
-        self.faces = int_(faces).transpose() - 1
+        self.faces = int_(faces).transpose()
         self.face_color = float_(face_color)
         self.n_vertices = self.vertices.shape[1]
         self.n_faces = self.faces.shape[1]
 
         # find the face normals
         self.face_normals = zeros((3, self.n_faces))
-        for k, idx_vertices in enumerate(faces):
+        for k, idx_vertices in enumerate(self.faces.T):
             vec1 = self.vertices[:, idx_vertices[1]] - self.vertices[:, idx_vertices[0]]
             vec2 = self.vertices[:, idx_vertices[2]] - self.vertices[:, idx_vertices[0]]
             normal = cross(vec1, vec2)
@@ -113,9 +113,9 @@ class GraphicalBody:
         for line in obj_file:
             data = line.strip().split(' ')
             if data[0] == 'v':
-                vertices.append(tuple(data[1:]))
+                vertices.append(tuple(float_(data[1:])))
             elif data[0] == 'f':
-                faces.append(tuple(data[1:]))
+                faces.append(tuple(int_(data[1:]) - 1))
 
         # Set the values
         self.set_graphics(vertices, faces, face_color)
@@ -127,7 +127,7 @@ class GraphicalBody:
         """
         if self.has_graphics:
             glColor3fv(self.face_color)
-            for k, face in enumerate(self.faces):
+            for k, face in enumerate(self.faces.T):
                 glNormal3fv(self.world_face_normals[:, k])
                 for idx_vertex in face:
                     glVertex3fv(self.world_vertices[:, idx_vertex])

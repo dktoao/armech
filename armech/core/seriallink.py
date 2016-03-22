@@ -32,7 +32,7 @@ class SerialLink:
         self.state = zeros(self.num_links, dtype='float')
         self.link_transforms = zeros((4, 4, self.num_links), dtype='float')
         self.tool_transform = identity(4, dtype='float')
-        self.global_rotation = identity(4, dtype='float')
+        self.global_rotation = identity(3, dtype='float')
         self.global_translation = zeros((3, 1), dtype='float')
 
         # move robot and joints to the initial position
@@ -42,8 +42,8 @@ class SerialLink:
 
     def global_transform(self):
         return concatenate(
-            concatenate(self.global_rotation, self.global_translation, axis=1),
-            float_([0, 0, 0, 1]).reshape((1, 4)), axis=0
+            (concatenate((self.global_rotation, self.global_translation), axis=1),
+            (float_([0, 0, 0, 1]).reshape((1, 4)))), axis=0
         )
 
     def set_global_transform(self, rotation=None, translation=None):

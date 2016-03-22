@@ -17,6 +17,7 @@ from armech.graphics.graphicalbody import GraphicalBody
 # Get the path to the cad directory
 CAD_DIR = join(dirname(realpath(__file__)), 'cad')
 
+
 class Simple3DOF(SerialLink):
     """A simple 3 degree of freedom robot class that can be used for testing
     and demonstration purposes.
@@ -32,7 +33,7 @@ class Simple3DOF(SerialLink):
     """
 
     def __init__(self, global_transform=None):
-        """Get and instance of Simple3DOF robot."""
+        """Get an instance of Simple3DOF robot."""
 
         # Create links
         base = GraphicalBody()
