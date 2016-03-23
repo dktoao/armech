@@ -3,6 +3,8 @@
 # Test function for making sure all the robot math is correct
 #
 
+from numpy.testing import assert_array_almost_equal
+
 from armech.demo.robot import Simple3DOF
 
 def test_simple3dof_forward_kinematics():

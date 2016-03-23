@@ -55,9 +55,10 @@ def test_workspace_and_other_objects_display_correctly():
 def test_simple3dof_displays_correctly():
 
     # Create a workspace
-    ws = Workspace((-2.0, 2.0), (-2.0, 2.0), (0.0, 4.0), face_color=(0.8, 0.8, 0.8))
+    ws = Workspace((-1.0, 1.0), (-1.0, 1.0), (0.0, 2.0), face_color=(0.8, 0.8, 0.8))
     # Create robot and put it in the workspace
     robot = Simple3DOF()
-    robot.set_global_transform(translation=[0, 0, 1])
+    robot.set_global_transform(translation=[0, 0, 0.5])
+    ws.add_robot('Simple3DOF', robot)
     view = UserYesNoTestViewer(ws, "Is the Simple 3 DOF robot displayed correctly?")
     view.show()

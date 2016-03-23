@@ -82,7 +82,7 @@ class SerialLink:
                 transform, link.state_transform(q[k])
             )
             self.link_transforms[:, :, k] = state_transform
-            link.transform(
+            link.set_transform(
                 rotation=state_transform[0:3, 0:3],
                 translation=state_transform[0:3, 3]
             )

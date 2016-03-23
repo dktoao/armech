@@ -8,6 +8,7 @@ from os.path import dirname, realpath, join
 from numpy import pi
 
 # Local imports
+from armech.config import UNIT_MM
 from armech.core.seriallink import SerialLink
 from armech.core.linkdh import LinkDH
 from armech.config import JOINT_REVOLUTE
@@ -43,10 +44,10 @@ class Simple3DOF(SerialLink):
 
         # Load graphics for each link
         obj_dir = join(CAD_DIR, 'simple3dof', 'obj')
-        base.load_obj(join(obj_dir, 'base.obj'), [0.5, 0.5, 0.5])
-        link1.load_obj(join(obj_dir, 'link1.obj'), [1.0, 0.0, 0.0])
-        link2.load_obj(join(obj_dir, 'link2.obj'), [0.0, 1.0, 0.0])
-        link3.load_obj(join(obj_dir, 'link3.obj'), [0.0, 0.0, 1.0])
+        base.load_obj(join(obj_dir, 'base.obj'), UNIT_MM,  [0.5, 0.5, 0.5])
+        link1.load_obj(join(obj_dir, 'link1.obj'), UNIT_MM, [1.0, 0.0, 0.0])
+        link2.load_obj(join(obj_dir, 'link2.obj'), UNIT_MM, [0.0, 1.0, 0.0])
+        link3.load_obj(join(obj_dir, 'link3.obj'), UNIT_MM, [0.0, 0.0, 1.0])
 
         # Initialize the SerialLink super class
         super(Simple3DOF, self).__init__(

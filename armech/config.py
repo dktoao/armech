@@ -5,3 +5,7 @@
 # Joint Type Constants
 JOINT_REVOLUTE = 1
 JOINT_PRISMATIC = 2
+
+# Unit Constants
+UNIT_M = 101
+UNIT_MM = 102

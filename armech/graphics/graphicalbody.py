@@ -7,6 +7,8 @@ from numpy import dot, identity, float_, int_, zeros, min, max, cross
 from numpy.linalg import norm
 from OpenGL.GL import glVertex3fv, glColor3fv, glNormal3fv
 
+from armech.config import UNIT_M, UNIT_MM
+
 # Constants
 DEFAULT_FACE_COLOR = float_((0.0, 1.0, 1.0))
 
@@ -93,11 +95,13 @@ class GraphicalBody:
         # Update world vertices and normals
         self.set_transform()
 
-    def load_obj(self, obj_file_name, face_color=DEFAULT_FACE_COLOR):
+    def load_obj(self, obj_file_name, obj_file_units=UNIT_MM, face_color=DEFAULT_FACE_COLOR):
         """
         Load the visual representation of the body from an .obj file.
         :param obj_file_name: link to the .obj file containing vertex and face
         info
+        :param obj_file_units: units for the .obj file, can be config.UNITS_MM
+         (milimeters) or config.UNITS_M (meters)
         :param face_color: float[3], color of the object faces, in RGB format
         e.g. (0.0, 1.0, 0.5)
         """
@@ -107,13 +111,19 @@ class GraphicalBody:
         if not obj_file:
             raise IOError('Could not open "{}"'.format(obj_file_name))
 
+        # Set the scaling constant
+        if obj_file_units == UNIT_MM:
+            scale_factor = 0.001
+        else:
+            scale_factor = 1.0
+
         # Parse the file and store vertices and faces
         vertices = []
         faces = []
         for line in obj_file:
             data = line.strip().split(' ')
             if data[0] == 'v':
-                vertices.append(tuple(float_(data[1:])))
+                vertices.append(tuple(float_(data[1:])*scale_factor))
             elif data[0] == 'f':
                 faces.append(tuple(int_(data[1:]) - 1))
 
