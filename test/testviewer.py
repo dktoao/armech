@@ -11,6 +11,7 @@ from ctypes import c_int
 
 from armech.graphics.workspaceviewer import BaseViewer
 
+
 class UserYesNoTestViewer(BaseViewer):
     """Viewer that accepts yes/no keys to determine if a test is passed."""
 
@@ -21,13 +22,6 @@ class UserYesNoTestViewer(BaseViewer):
             test_message: Message that the user should respond with a Yes/No
                           answer to.
         """
-        # Constants
-        self.USE_MESSAGE = \
-        """
-            <- NO\n
-            -> YES
-        """
-
         # Initialize the super BaseViewer class
         super(UserYesNoTestViewer, self).__init__(workspace)
 
@@ -38,7 +32,8 @@ class UserYesNoTestViewer(BaseViewer):
         self.register_callback(KEYDOWN, K_LEFT, self.cb_fail_test)
         self.register_callback(KEYDOWN, K_RIGHT, self.cb_quit)
 
-    def cb_fail_test(self):
+    @staticmethod
+    def cb_fail_test():
         """Raise error and fail the test"""
         raise UserTestError('The test observer has failed the test')
 
