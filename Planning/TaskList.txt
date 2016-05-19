@@ -18,9 +18,9 @@
 	- Model testing robot in FreeCAD
 	  COMPLETE
 
-?:
+4-1-2016:
 	- Design and implement bare-bones versions of the SerialLink and Environment classes.
-	  INCOMPLETE(50%)
+	  COMPLETE
 
 10-1-2016:
 	- Investigate using PyOpenGL to create a graphical simulation of the robot
@@ -75,13 +75,13 @@
     - Implement test viewer and fail tests properly
     COMPLETE
 
-?:
+4-2-2016:
     - Import a basic robot and see that it moves to the correct positions when
       given angles from the user.
-    INCOMPLETE
+    COMPLETE
     - Write some tests to confirm that the end effector is ending up where
       it needs to be
-    INCOMPLETE
+    COMPLETE
 
 ?:
     - Get Sphinx documentation setup and start documenting code
@@ -97,7 +97,7 @@
     INCOMPLETE
 
 ?:
-    - Implements numerical inverse kinematics for robots will all different
+    - Implements numerical inverse kinematics for robots with all different
       degrees of freedom (< 6, 6, > 6)
     INCOMPLETE
 
@@ -114,13 +114,9 @@
     - Implement cartesian path planning
     INCOMPLETE
 
-?:
-    - Implement catiesian space path planning algorithms
-    INCOMPLETE
-
-?:
+4-1-2016:
     - Implement forward dynamics.
-    INCOMPLETE
+    COMPLETE
 
 ?:
     - Implement inverse dynamics.
